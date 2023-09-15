@@ -61,7 +61,7 @@ void loop() {
     blinkAll(100, 3);
     togetherAmount = 0;
     delay(500);
-    // TODO: do the bit shift thingy, change the amount of pixels that are lit up on each strip
+    switchPixel();
     return;
   }
 
@@ -95,5 +95,23 @@ void blinkAll(int delayTime, int times) {
     upperStrip.clear();
     upperStrip.show();
     delay(delayTime);
+  }
+}
+
+void switchPixel() {
+  if (loverPixelAmount == upperPixelAmount) {
+    loverPixelAmount += 1;
+    upperPixelAmount -= 1;
+  }
+  else if (loverPixelAmount > upperPixelAmount) {
+    loverPixelAmount -= 1;
+    upperPixelAmount += 1;
+  }
+  else if (loverPixelAmount < upperPixelAmount) {
+    loverPixelAmount += 1;
+    upperPixelAmount -= 1;
+  }
+  else {
+    Serial.println("Something went wrong, loverPixelAmount and upperPixelAmount are not equal, but none of the if statements were true");
   }
 }
