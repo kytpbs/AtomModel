@@ -2,23 +2,21 @@
 #include "pinConstants.h"
 #include "strips.h"
 
-//Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GBR + NEO_KHZ800);
-// Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800);
 
-int strip1Index = 0;
-int strip2Index = 0;
+int loverStripPixelIndex = 0; // the index of the first electron / pixel in the lover strip
+int upperStripPixelIndex = 0; // the index of the first electron / pixel in the upper strip
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
 int loverPixelAmount = 2;
 int upperPixelAmount = 2;
 
-bool wasTogether = true;
+bool wasTogether = true; // This is used to check if the two pixels were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(115200); // Start the serial connection
   while (!Serial) { // Wait for the serial connection to be establised.
     if (millis() > 4000) {
       break; // If we don't get a serial connection in 4 seconds, stop waiting.
@@ -32,17 +30,19 @@ void setup() {
 void setupStrips() {
   // Setup lover strip
   Serial.println("Setting up lover strip...");
-  loverStrip.begin();
+  loverStrip.begin(); // This initializes the strip
+  loverStrip.clear(); // Set all pixel colors to 'off'
   loverStrip.show(); // Initialize all pixels to 'off'
   
   // Setup upper strip
   Serial.println("Setting up upper strip...");
-  upperStrip.begin();
+  upperStrip.begin(); // This initializes the strip
+  upperStrip.clear(); // Set all pixel colors to 'off'
   upperStrip.show(); // Initialize all pixels to 'off'
 }
 
 void loop() {
-  if (strip1Index == strip2Index) {
+  if (loverStripPixelIndex == upperStripPixelIndex) { // If the two pixels are together
     if (!wasTogether) {
       wasTogether = true;
       Serial.println("Wasn't together before, increasing together amount");
@@ -56,7 +56,8 @@ void loop() {
     }
   }
   
-  if (togetherAmount > 5) {
+  
+  if (togetherAmount > 5) { // Electron switch to the other side
     Serial.println("Blinking! as they were together for 5 times");
     blinkAll(100, 3);
     togetherAmount = 0;
@@ -65,23 +66,23 @@ void loop() {
     return;
   }
 
-  moveRedFowards();
+  moveRedFowards(); // Move The Electrons Foward
   delay(200);
 }
 
 /**
- * Moves the red color pixel by pixel from the back to the front removing the red color from the back
+ * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveRedFowards() {
-  moveColorFowardOnce(&loverStrip, loverStrip.Color(255, 0, 0), strip1Index, loverPixelAmount);
-  moveColorFowardOnce(&upperStrip, upperStrip.Color(255, 0, 0), strip2Index, upperPixelAmount);
-  strip1Index++;
-  strip2Index++;
-  if (strip1Index >= loverStrip.numPixels()) {
-    strip1Index = 0;
+  moveColorFowardOnce(&loverStrip, loverStrip.Color(255, 0, 0), loverStripPixelIndex, loverPixelAmount);
+  moveColorFowardOnce(&upperStrip, upperStrip.Color(255, 0, 0), upperStripPixelIndex, upperPixelAmount);
+  loverStripPixelIndex++;
+  upperStripPixelIndex++;
+  if (loverStripPixelIndex >= loverStrip.numPixels()) {
+    loverStripPixelIndex = 0;
   }
-  if (strip2Index >= upperStrip.numPixels()) {
-    strip2Index = 0;
+  if (upperStripPixelIndex >= upperStrip.numPixels()) {
+    upperStripPixelIndex = 0;
   }
 }
 
