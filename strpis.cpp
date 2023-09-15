@@ -6,11 +6,8 @@ void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color) {
 }
 
 void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
-    //TODO: use the strip->fill() function instead of this
-    for(int i=0; i<strip->numPixels(); i++) { // For each pixel in strip...
-        strip->setPixelColor(i, color);         //  Set pixel's color (in RAM)
-        strip->show();                          //  Update strip to match
-    }
+    strip->fill(color, 0, strip->numPixels());
+    strip->show();
 }
 
 void blink(Adafruit_NeoPixel *strip, int delayTime, int times) {
