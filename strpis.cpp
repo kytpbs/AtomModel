@@ -1,13 +1,16 @@
 #include <Adafruit_NeoPixel.h>
 #include "strips.h"
 
-
+void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color) {
+    strip->setPixelColor(index % strip->numPixels(), color);
+}
 
 void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
-  for(int i=0; i<strip->numPixels(); i++) { // For each pixel in strip...
-    strip->setPixelColor(i, color);         //  Set pixel's color (in RAM)
-    strip->show();                          //  Update strip to match
-  }
+    //TODO: use the strip->fill() function instead of this
+    for(int i=0; i<strip->numPixels(); i++) { // For each pixel in strip...
+        strip->setPixelColor(i, color);         //  Set pixel's color (in RAM)
+        strip->show();                          //  Update strip to match
+    }
 }
 
 void blink(Adafruit_NeoPixel *strip, int delayTime, int times) {
@@ -19,12 +22,11 @@ void blink(Adafruit_NeoPixel *strip, int delayTime, int times) {
   }
 }
 
-/**
- * Moves the red color pixel by pixel from the back to the front removing the red color from the back
- * INDEX: The index of the pixel to light up
-*/
-void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, int index) {
+void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, int index, int numPixels) {
     strip->clear();
-    strip->setPixelColor(index, color);
+    for (int i=0; i<numPixels; i++) {
+        setPixel(strip, i*2 + index, color);
+    }
+    setPixel(strip, index, color);
     strip->show();
 }

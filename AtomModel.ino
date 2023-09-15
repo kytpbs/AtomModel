@@ -2,8 +2,6 @@
 #include "pinConstants.h"
 #include "strips.h"
 
-// TODO: Add support for multiple pixels on the same strip
-
 //Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GBR + NEO_KHZ800);
 // Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800);
@@ -12,6 +10,11 @@ Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800);
 int strip1Index = 0;
 int strip2Index = 0;
 int togetherAmount = 0;
+
+// I will use these variables when changing the amount of pixels that are lit up on each.
+int loverPixelAmount = 2;
+int upperPixelAmount = 2;
+
 bool wasTogether = true;
 
 void setup() {
@@ -58,7 +61,7 @@ void loop() {
     blinkAll(100, 3);
     togetherAmount = 0;
     delay(500);
-    // TODO: do the bit shift thingy
+    // TODO: do the bit shift thingy, change the amount of pixels that are lit up on each strip
     return;
   }
 
@@ -70,8 +73,8 @@ void loop() {
  * Moves the red color pixel by pixel from the back to the front removing the red color from the back
 */
 void moveRedFowards() {
-  moveColorFowardOnce(&loverStrip, loverStrip.Color(255, 0, 0), strip1Index);
-  moveColorFowardOnce(&upperStrip, upperStrip.Color(255, 0, 0), strip2Index);
+  moveColorFowardOnce(&loverStrip, loverStrip.Color(255, 0, 0), strip1Index, loverPixelAmount);
+  moveColorFowardOnce(&upperStrip, upperStrip.Color(255, 0, 0), strip2Index, upperPixelAmount);
   strip1Index++;
   strip2Index++;
   if (strip1Index >= loverStrip.numPixels()) {
