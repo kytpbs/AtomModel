@@ -40,8 +40,17 @@ void setupStrips() {
 
 void loop() {
   if (strip1Index == strip2Index) {
-    Serial.println("Together!");
-    togetherAmount++;
+    if (!wasTogether) {
+      wasTogether = true;
+      Serial.println("Wasn't together before, increasing together amount");
+      togetherAmount++;
+    }
+  }
+  else {
+    if (wasTogether) {
+      wasTogether = false;
+      Serial.println("Was together before, setting together amount to 0");
+    }
   }
   
   if (togetherAmount > 5) {
