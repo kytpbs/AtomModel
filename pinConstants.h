@@ -3,3 +3,5 @@
 
 #define UPDATA 13 // The pin that the upper strip is connected to
 #define DOWNDATA 12 // The pin that the lower strip is connected to
+
+#define BRIGHTNESS 50 // Should be a value from 0 - 100

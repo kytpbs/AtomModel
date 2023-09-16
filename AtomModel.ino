@@ -31,12 +31,14 @@ void setupStrips() {
   // Setup lover strip
   Serial.println("Setting up lover strip...");
   loverStrip.begin(); // This initializes the strip
+  loverStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
   loverStrip.clear(); // Set all pixel colors to 'off'
   loverStrip.show(); // Initialize all pixels to 'off'
   
   // Setup upper strip
   Serial.println("Setting up upper strip...");
   upperStrip.begin(); // This initializes the strip
+  upperStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
   upperStrip.clear(); // Set all pixel colors to 'off'
   upperStrip.show(); // Initialize all pixels to 'off'
 }
