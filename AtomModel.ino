@@ -51,12 +51,9 @@ void loop() {
       togetherAmount++;
       Serial.println(togetherAmount);
     }
-  }
-  else {
-    if (wasTogether) {
-      wasTogether = false;
-      Serial.println("Was together before, setting together amount to 0");
-    }
+  } else if (wasTogether) {
+    wasTogether = false; // Reset the wasTogether variable
+    Serial.println("Was together before, setting together amount to 0");
   }
   
   
