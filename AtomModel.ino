@@ -13,6 +13,7 @@ int togetherAmount = 0;
 int loverPixelAmount = PIXELAMOUNT;
 int upperPixelAmount = PIXELAMOUNT;
 
+// it is set to true because, we start with the two pixels together
 bool wasTogether = true; // This is used to check if the two pixels were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
 
 void setup() {
@@ -91,8 +92,8 @@ void blinkAll(int delayTime, int times) {
     flushColor(&upperStrip, upperStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
     delay(delayTime);
     loverStrip.clear();
-    loverStrip.show();
     upperStrip.clear();
+    loverStrip.show();
     upperStrip.show();
     delay(delayTime);
   }
