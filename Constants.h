@@ -7,10 +7,11 @@
 #define PIXELAMOUNT 3 // The number of pixels that are lit up on each strip (will change on pixel switch)
 #define PIXELSPACE 11 // The number of pixels between the two pixels that are lit up
 
-#define BRIGHTNESS 50 // Should be a value from 0 - 255
+#define BRIGHTNESS 255 // Should be a value from 0 - 255
+
 //Electron Colors should be values from (0 - 255):
-#define RED 0
-#define GREEN 255
+#define RED 255
+#define GREEN 0
 #define BLUE 255
 
 #define DELAYTIME 75 // The amount of time between each pixel movement in milliseconds.
