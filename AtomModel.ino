@@ -47,8 +47,9 @@ void loop() {
   if (loverStripPixelIndex == upperStripPixelIndex) { // If the two pixels are together
     if (!wasTogether) {
       wasTogether = true;
-      Serial.println("Wasn't together before, increasing together amount");
+      Serial.print("Wasn't together before, increasing together amount, New together Amount");
       togetherAmount++;
+      Serial.println(togetherAmount);
     }
   }
   else {
