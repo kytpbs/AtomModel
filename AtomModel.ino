@@ -2,8 +2,8 @@
 #include "Constants.h"
 #include "strips.h"
 
-Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800); // Create the lover strip object
+Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800); // Create the upper strip object
 
 int loverStripPixelIndex = 0; // the index of the first electron / pixel in the lover strip
 int upperStripPixelIndex = 0; // the index of the first electron / pixel in the upper strip
