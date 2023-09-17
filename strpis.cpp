@@ -1,5 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 #include "strips.h"
+#include "Constants.h"
 
 void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color) {
     strip->setPixelColor(index % strip->numPixels(), color);
@@ -13,7 +14,7 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
 void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, int index, int numPixels) {
     strip->clear();
     for (int i=0; i<numPixels; i++) {
-      setPixel(strip, i*2 + index, color);
+      setPixel(strip, i*(PIXELSPACE + 1) + index, color);
     }
     strip->show();
 }

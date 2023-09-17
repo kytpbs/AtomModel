@@ -5,6 +5,7 @@
 #define DOWNDATA 12 // The pin that the lower strip is connected to
 
 #define PIXELAMOUNT 3 // The number of pixels that are lit up on each strip (will change on pixel switch)
+#define PIXELSPACE 11 // The number of pixels between the two pixels that are lit up
 
 #define BRIGHTNESS 50 // Should be a value from 0 - 255
 //Electron Colors should be values from (0 - 255):
