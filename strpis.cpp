@@ -10,15 +10,6 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
     strip->show();
 }
 
-void blink(Adafruit_NeoPixel *strip, int delayTime, int times) {
-  for(int i=0; i<times; i++) {
-    flushColor(strip, strip->Color(255, 0, 0));
-    delay(delayTime);
-    flushColor(strip, strip->Color(0, 0, 0));
-    delay(delayTime);
-  }
-}
-
 void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, int index, int numPixels) {
     strip->clear();
     for (int i=0; i<numPixels; i++) {
