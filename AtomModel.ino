@@ -59,25 +59,24 @@ void loop() {
   }
   
   
-  if (togetherAmount > 5) { // Electron switch to the other side
+  if (togetherAmount >= TOGETHERAMOUNT) { // Electron switch to the other side
     Serial.println("Blinking! as they were together for 5 times");
-    blinkAll(100, 3);
-    togetherAmount = 0;
-    delay(500);
-    switchPixel();
+    blinkAll(BLINKDELAY, BLINKAMOUNT); // Blink the pixels
+    togetherAmount = 0; // Reset the together amount
+    switchPixel(); // Switch the pixels
     return;
   }
 
   moveRedFowards(); // Move The Electrons Foward
-  delay(200);
+  delay(DELAYTIME);
 }
 
 /**
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveRedFowards() {
-  moveColorFowardOnce(&loverStrip, loverStrip.Color(255, 0, 0), loverStripPixelIndex, loverPixelAmount);
-  moveColorFowardOnce(&upperStrip, upperStrip.Color(255, 0, 0), upperStripPixelIndex, upperPixelAmount);
+  moveColorFowardOnce(&loverStrip, loverStrip.Color(RED, GREEN, BLUE), loverStripPixelIndex, loverPixelAmount);
+  moveColorFowardOnce(&upperStrip, upperStrip.Color(RED, GREEN, BLUE), upperStripPixelIndex, upperPixelAmount);
   loverStripPixelIndex++;
   upperStripPixelIndex++;
   if (loverStripPixelIndex >= loverStrip.numPixels()) {
@@ -90,8 +89,8 @@ void moveRedFowards() {
 
 void blinkAll(int delayTime, int times) {
   for (int i=0; i<times; i++) {
-    flushColor(&loverStrip, loverStrip.Color(255, 0, 0));
-    flushColor(&upperStrip, upperStrip.Color(255, 0, 0));
+    flushColor(&loverStrip, loverStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
+    flushColor(&upperStrip, upperStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
     delay(delayTime);
     loverStrip.clear();
     loverStrip.show();

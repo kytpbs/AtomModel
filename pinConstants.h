@@ -7,3 +7,17 @@
 #define PIXELAMOUNT 3 // The number of pixels that are lit up on each strip (will change on pixel switch)
 
 #define BRIGHTNESS 50 // Should be a value from 0 - 100
+//Electron Colors should be values from (0 - 255):
+#define RED 0
+#define GREEN 255
+#define BLUE 255
+
+#define DELAYTIME 75 // The amount of time between each pixel movement in milliseconds.
+#define TOGETHERAMOUNT 5 // The amount of times the pixels need to be together to switch
+
+//Blinking Constants
+#define BLINKAMOUNT 3 // The amount of times the pixels blink when they switch
+#define BLINKDELAY 100 // The amount of time between each blink in milliseconds
+#define BLINKRED 255 // The amount of red in the blink
+#define BLINKGREEN 255 // The amount of green in the blink
+#define BLINKBLUE 255 // The amount of blue in the blink
