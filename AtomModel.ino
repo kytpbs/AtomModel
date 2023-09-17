@@ -100,19 +100,12 @@ void blinkAll(int delayTime, int times) {
 }
 
 void switchPixel() {
-  if (loverPixelAmount == upperPixelAmount) {
-    loverPixelAmount += 1;
-    upperPixelAmount -= 1;
-  }
-  else if (loverPixelAmount > upperPixelAmount) {
-    loverPixelAmount -= 1;
-    upperPixelAmount += 1;
-  }
-  else if (loverPixelAmount < upperPixelAmount) {
+  if (loverPixelAmount <= upperPixelAmount) {
     loverPixelAmount += 1;
     upperPixelAmount -= 1;
   }
   else {
-    Serial.println("Something went wrong, loverPixelAmount and upperPixelAmount are not equal, but none of the if statements were true");
+    loverPixelAmount -= 1;
+    upperPixelAmount += 1;
   }
 }
