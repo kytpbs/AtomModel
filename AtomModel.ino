@@ -10,8 +10,8 @@ int upperStripPixelIndex = 0; // the index of the first electron / pixel in the 
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
-int loverPixelAmount = 2;
-int upperPixelAmount = 2;
+int loverPixelAmount = PIXELAMOUNT;
+int upperPixelAmount = PIXELAMOUNT;
 
 bool wasTogether = true; // This is used to check if the two pixels were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
 
