@@ -1,5 +1,5 @@
 #include <Adafruit_NeoPixel.h>
-#include "pinConstants.h"
+#include "Constants.h"
 #include "strips.h"
 
 Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800);
