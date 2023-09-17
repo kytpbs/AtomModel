@@ -13,8 +13,7 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
 void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, int index, int numPixels) {
     strip->clear();
     for (int i=0; i<numPixels; i++) {
-        setPixel(strip, i*2 + index, color);
+      setPixel(strip, i*2 + index, color);
     }
-    setPixel(strip, index, color);
     strip->show();
 }
