@@ -23,3 +23,8 @@
 #define BLINKRED 255 // The amount of red in the blink
 #define BLINKGREEN 255 // The amount of green in the blink
 #define BLINKBLUE 255 // The amount of blue in the blink
+
+//Bacground Color Constants
+#define BACKGROUNDRED 0 // The amount of red in the background color
+#define BACKGROUNDGREEN 255 // The amount of green in the background color
+#define BACKGROUNDBLUE 0 // The amount of blue in the background color
