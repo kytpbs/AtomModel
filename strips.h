@@ -18,9 +18,6 @@ void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color);
 */
 void flushColor(Adafruit_NeoPixel *strip, uint32_t color);
 
-//TODO: add docstring
-void blink(Adafruit_NeoPixel *strip, int delayTime, int times);
-
 /**
  * Moves the red color pixel by pixel from the back to the front removing the red color from the back
  * @param INDEX: The index of the pixel to light up
