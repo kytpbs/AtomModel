@@ -74,8 +74,8 @@ void loop() {
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveRedFowards() {
-  moveColorFowardOnce(&loverStrip, loverStrip.Color(RED, GREEN, BLUE), loverStripPixelIndex, loverPixelAmount);
-  moveColorFowardOnce(&upperStrip, upperStrip.Color(RED, GREEN, BLUE), upperStripPixelIndex, upperPixelAmount);
+  moveColorFowardOnce(&loverStrip, loverStrip.Color(LOVERRED, LOVERGREEN, LOVERBLUE), loverStrip.Color(LOVERBACKGROUNDRED, LOVERBACKGROUNDGREEN, LOVERBACKGROUNDBLUE), loverStripPixelIndex, loverPixelAmount);
+  moveColorFowardOnce(&upperStrip, upperStrip.Color(UPPERRED, UPPERGREEN, UPPERBLUE), upperStrip.Color(UPPERBACKGROUNDRED, UPPERBACKGROUNDGREEN, UPPERBACKGROUNDBLUE), upperStripPixelIndex, upperPixelAmount);
   loverStripPixelIndex++;
   upperStripPixelIndex++;
   if (loverStripPixelIndex >= loverStrip.numPixels()) {
