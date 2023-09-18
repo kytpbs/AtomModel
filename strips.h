@@ -10,7 +10,12 @@
 */
 void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color);
 
-//TODO: add docstring
+/**
+ * Sets all the pixels to the given color
+ * It will show the pixels unlike the setPixel function
+ * @param STRIP: The strip to change the pixels of
+ * @param COLOR: The color to set the pixels to
+*/
 void flushColor(Adafruit_NeoPixel *strip, uint32_t color);
 
 //TODO: add docstring
