@@ -23,6 +23,6 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color);
  * @param INDEX: The index of the pixel to light up
  * @param NUMPIXELS: The number of pixels in the strip will be used to wrap around the index, will leave an empty between them (might change later, should I?)
 */
-void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, int index, int numPixels);
+void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels);
 
 #endif
