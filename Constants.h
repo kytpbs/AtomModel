@@ -7,7 +7,7 @@
 #define PIXELAMOUNT 3 // The number of pixels that are lit up on each strip (will change on pixel switch)
 
 /*
- * The number of pixels between the two pixels that are lit up (the space amount is 1 less) should be devidble by both the upper and lower number of pixels.
+ * The number of pixels between the two pixels including the pixel that are lit up. Should be devidble by both the upper and lower number of pixels.
  * This is because we want the pixels to be evenly spaced out. IF THIS IS NOT TRUE, THE PIXELS WILL NOT BE EVENLY SPACED OUT.
 */
 #define PIXELSPACE 11 
