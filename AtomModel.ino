@@ -2,15 +2,15 @@
 #include "Constants.h"
 #include "strips.h"
 
-Adafruit_NeoPixel loverStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800); // Create the lover strip object
+Adafruit_NeoPixel lowerStrip(UPNUMPIXELS, UPDATA, NEO_GRB + NEO_KHZ800); // Create the lower strip object
 Adafruit_NeoPixel upperStrip(DOWNNUMPIXELS, DOWNDATA, NEO_GRB + NEO_KHZ800); // Create the upper strip object
 
-int loverStripPixelIndex = 0; // the index of the first electron / pixel in the lover strip
+int lowerStripPixelIndex = 0; // the index of the first electron / pixel in the lower strip
 int upperStripPixelIndex = 0; // the index of the first electron / pixel in the upper strip
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
-int loverPixelAmount = PIXELAMOUNT;
+int lowerPixelAmount = PIXELAMOUNT;
 int upperPixelAmount = PIXELAMOUNT;
 
 // it is set to true because, we start with the two pixels together
@@ -29,12 +29,12 @@ void setup() {
 }
 
 void setupStrips() {
-  // Setup lover strip
-  Serial.println("Setting up lover strip...");
-  loverStrip.begin(); // This initializes the strip
-  loverStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
-  loverStrip.clear(); // Set all pixel colors to 'off'
-  loverStrip.show(); // Initialize all pixels to 'off'
+  // Setup lower strip
+  Serial.println("Setting up lower strip...");
+  lowerStrip.begin(); // This initializes the strip
+  lowerStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
+  lowerStrip.clear(); // Set all pixel colors to 'off'
+  lowerStrip.show(); // Initialize all pixels to 'off'
   
   // Setup upper strip
   Serial.println("Setting up upper strip...");
@@ -45,7 +45,7 @@ void setupStrips() {
 }
 
 void loop() {
-  if (loverStripPixelIndex == upperStripPixelIndex) { // If the two pixels are together
+  if (lowerStripPixelIndex == upperStripPixelIndex) { // If the two pixels are together
     if (!wasTogether) {
       wasTogether = true;
       Serial.print("Wasn't together before, increasing together amount, New together Amount");
@@ -74,12 +74,12 @@ void loop() {
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveRedFowards() {
-  moveColorFowardOnce(&loverStrip, loverStrip.Color(LOVERRED, LOVERGREEN, LOVERBLUE), loverStrip.Color(LOVERBACKGROUNDRED, LOVERBACKGROUNDGREEN, LOVERBACKGROUNDBLUE), loverStripPixelIndex, loverPixelAmount);
+  moveColorFowardOnce(&lowerStrip, lowerStrip.Color(lowerRED, lowerGREEN, lowerBLUE), lowerStrip.Color(lowerBACKGROUNDRED, lowerBACKGROUNDGREEN, lowerBACKGROUNDBLUE), lowerStripPixelIndex, lowerPixelAmount);
   moveColorFowardOnce(&upperStrip, upperStrip.Color(UPPERRED, UPPERGREEN, UPPERBLUE), upperStrip.Color(UPPERBACKGROUNDRED, UPPERBACKGROUNDGREEN, UPPERBACKGROUNDBLUE), upperStripPixelIndex, upperPixelAmount);
-  loverStripPixelIndex++;
+  lowerStripPixelIndex++;
   upperStripPixelIndex++;
-  if (loverStripPixelIndex >= loverStrip.numPixels()) {
-    loverStripPixelIndex = 0;
+  if (lowerStripPixelIndex >= lowerStrip.numPixels()) {
+    lowerStripPixelIndex = 0;
   }
   if (upperStripPixelIndex >= upperStrip.numPixels()) {
     upperStripPixelIndex = 0;
@@ -88,24 +88,24 @@ void moveRedFowards() {
 
 void blinkAll(int delayTime, int times) {
   for (int i=0; i<times; i++) {
-    flushColor(&loverStrip, loverStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
+    flushColor(&lowerStrip, lowerStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
     flushColor(&upperStrip, upperStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
     delay(delayTime);
-    loverStrip.clear();
+    lowerStrip.clear();
     upperStrip.clear();
-    loverStrip.show();
+    lowerStrip.show();
     upperStrip.show();
     delay(delayTime);
   }
 }
 
 void switchPixel() {
-  if (loverPixelAmount <= upperPixelAmount) {
-    loverPixelAmount += 1;
+  if (lowerPixelAmount <= upperPixelAmount) {
+    lowerPixelAmount += 1;
     upperPixelAmount -= 1;
   }
   else {
-    loverPixelAmount -= 1;
+    lowerPixelAmount -= 1;
     upperPixelAmount += 1;
   }
 }

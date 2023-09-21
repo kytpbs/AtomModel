@@ -15,10 +15,10 @@
 
 #define BRIGHTNESS 255 // The brightness of the LEDS should be a value from 0 - 255
 
-//Electron Colors of the Lover Stshould be values from (0 - 255):
-#define LOVERRED 255
-#define LOVERGREEN 0
-#define LOVERBLUE 255
+//Electron Colors of the lower Stshould be values from (0 - 255):
+#define lowerRED 255
+#define lowerGREEN 0
+#define lowerBLUE 255
 
 // Electron Colors of the Upper Strip should be values from (0 - 255):
 #define UPPERRED 255
@@ -36,9 +36,9 @@
 #define BLINKBLUE 255 // The amount of blue in the blink
 
 //Background Color Constants
-#define LOVERBACKGROUNDRED 0 // The amount of red in the background color
-#define LOVERBACKGROUNDGREEN 255 // The amount of green in the background color
-#define LOVERBACKGROUNDBLUE 0 // The amount of blue in the background color
+#define lowerBACKGROUNDRED 0 // The amount of red in the background color
+#define lowerBACKGROUNDGREEN 255 // The amount of green in the background color
+#define lowerBACKGROUNDBLUE 0 // The amount of blue in the background color
 
 #define UPPERBACKGROUNDRED 0 // The amount of red in the upper background color
 #define UPPERBACKGROUNDGREEN 0 // The amount of green in the upper background color
