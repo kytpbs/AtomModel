@@ -1,8 +1,8 @@
-#define UPNUMPIXELS 11 // The number of LEDs in the outer strip
-#define DOWNNUMPIXELS 22 // The number of LEDs in the inner strip
+#define OUTNUMPIXELS 11 // The number of LEDs in the outer strip
+#define INNUMPIXELS 22 // The number of LEDs in the inner strip
 
-#define UPDATA 13 // The pin that the outer strip is connected to
-#define DOWNDATA 12 // The pin that the inner strip is connected to
+#define OUTDATA 13 // The pin that the outer strip is connected to
+#define INDATA 12 // The pin that the inner strip is connected to
 
 #define PIXELAMOUNT 3 // The number of pixels that are lit up on each strip (will change on pixel switch)
 
