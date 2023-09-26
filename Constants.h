@@ -37,9 +37,9 @@
 
 //Background Color Constants
 #define innerBACKGROUNDRED 0 // The amount of red in the background color
-#define innerBACKGROUNDGREEN 0 // The amount of green in the background color
+#define innerBACKGROUNDGREEN 5 // The amount of green in the background color
 #define innerBACKGROUNDBLUE 0 // The amount of blue in the background color
 
-#define outerBACKGROUNDRED 0 // The amount of red in the outer background color
-#define outerBACKGROUNDGREEN 0 // The amount of green in the outer background color
+#define outerBACKGROUNDRED 400/100 // The amount of red in the outer background color
+#define outerBACKGROUNDGREEN 165/100 // The amount of green in the outer background color
 #define outerBACKGROUNDBLUE 0 // The amount of blue in the outer background color
