@@ -21,9 +21,9 @@
 #define innerBLUE 255
 
 // Electron Colors of the outer Strip should be values from (0 - 255):
-#define outerRED 255
-#define outerGREEN 255
-#define outerBLUE 0
+#define outerRED 0
+#define outerGREEN 0
+#define outerBLUE 255
 
 #define DELAYTIME 25 // The amount of time between each pixel movement in milliseconds.
 #define TOGETHERAMOUNT 2 // The amount of times the pixels need to be together to switch
