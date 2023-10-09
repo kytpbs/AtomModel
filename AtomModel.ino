@@ -66,14 +66,14 @@ void loop() {
     return;
   }
 
-  moveRedFowards(); // Move The Electrons Foward
+  moveElectronFoward(); // Move The Electrons Foward
   delay(DELAYTIME);
 }
 
 /**
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
-void moveRedFowards() {
+void moveElectronFoward() {
   moveColorFowardOnce(&innerStrip, innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerStripPixelIndex, innerPixelAmount);
   moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount);
   innerStripPixelIndex++;
