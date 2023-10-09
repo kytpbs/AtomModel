@@ -78,10 +78,10 @@ void moveElectronFoward() {
   moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount);
   innerStripPixelIndex++;
   outerStripPixelIndex++;
-  if (innerStripPixelIndex >= innerStrip.numPixels()) {
+  if (innerStripPixelIndex > innerStrip.numPixels()) {
     innerStripPixelIndex = 0;
   }
-  if (outerStripPixelIndex >= outerStrip.numPixels()) {
+  if (outerStripPixelIndex > outerStrip.numPixels()) {
     outerStripPixelIndex = 0;
   }
 }
