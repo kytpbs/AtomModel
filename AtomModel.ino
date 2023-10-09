@@ -59,7 +59,7 @@ void loop() {
     if (!wasTogether) {
       wasTogether = true;
       Serial.print("Wasn't together before, increasing together amount, New together Amount");
-      togetherAmount++;
+      togetherAmount++; // Increase the together amount
       Serial.println(togetherAmount);
     }
   } else if (wasTogether) {
@@ -67,8 +67,7 @@ void loop() {
     Serial.println("Was together before, setting together amount to 0");
   }
   
-  
-  if (togetherAmount >= TOGETHERAMOUNT) { // Electron switch to the other side
+  if (togetherAmount >= TOGETHERAMOUNT) { // Electron switch to the other side (>= incase error)
     Serial.println("Blinking! as they were together for 5 times");
     blinkAll(BLINKDELAY, BLINKAMOUNT); // Blink the pixels
     togetherAmount = 0; // Reset the together amount
