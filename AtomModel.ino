@@ -83,12 +83,14 @@ void loop() {
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveElectronFoward() {
-  moveColorFowardOnce(&innerStrip, innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerStripPixelIndex, innerPixelAmount);
-  moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount);
-  moveColorFowardOnce(&smallStrip, smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallStripPixelIndex, SMALLPIXELAMOUNT);
-  innerStripPixelIndex++;
-  outerStripPixelIndex++;
-  smallStripPixelIndex++;
+  // Move the electrons foward
+  moveColorFowardOnce(&innerStrip, innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerStripPixelIndex, innerPixelAmount); // Move the inner electron foward
+  moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount); // Move the outer electron foward
+  moveColorFowardOnce(&smallStrip, smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallStripPixelIndex, SMALLPIXELAMOUNT); // Move the small electron foward
+  // Increase the pixel indexes
+  innerStripPixelIndex++; // Increase the inner strip pixel index by one
+  outerStripPixelIndex++; // Increase the outer strip pixel index by one
+  smallStripPixelIndex++; // Increase the small strip pixel index by one
   if (innerStripPixelIndex > innerStrip.numPixels()) {
     innerStripPixelIndex = 0;
   }
