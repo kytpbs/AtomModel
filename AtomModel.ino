@@ -2,16 +2,19 @@
 #include "Constants.h"
 #include "strips.h"
 
+Adafruit_NeoPixel smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
 Adafruit_NeoPixel innerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
 Adafruit_NeoPixel outerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
 
 int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
+int smallStripPixelIndex = 0; // the index of the first electron / pixel in the small strip
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
 int innerPixelAmount = PIXELAMOUNT;
 int outerPixelAmount = PIXELAMOUNT;
+int smallPixelAmount = SMALLPIXELAMOUNT;
 
 // it is set to true because, we start with the two pixels together
 bool wasTogether = true; // This is used to check if the two pixels were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
@@ -42,6 +45,13 @@ void setupStrips() {
   outerStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
   outerStrip.clear(); // Set all pixel colors to 'off'
   outerStrip.show(); // Initialize all pixels to 'off'
+
+  // Setup small strip
+  Serial.println("Setting up small strip...");
+  smallStrip.begin(); // This initializes the strip
+  smallStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
+  smallStrip.clear(); // Set all pixel colors to 'off'
+  smallStrip.show(); // Initialize all pixels to 'off'
 }
 
 void loop() {
@@ -76,8 +86,10 @@ void loop() {
 void moveElectronFoward() {
   moveColorFowardOnce(&innerStrip, innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerStripPixelIndex, innerPixelAmount);
   moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount);
+  moveColorFowardOnce(&smallStrip, smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallStripPixelIndex, SMALLPIXELAMOUNT);
   innerStripPixelIndex++;
   outerStripPixelIndex++;
+  smallStripPixelIndex++;
   if (innerStripPixelIndex > innerStrip.numPixels()) {
     innerStripPixelIndex = 0;
   }
