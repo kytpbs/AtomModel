@@ -3,8 +3,8 @@
 #include "strips.h"
 
 Adafruit_NeoPixel smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
-Adafruit_NeoPixel innerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
-Adafruit_NeoPixel outerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
+Adafruit_NeoPixel innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
+Adafruit_NeoPixel outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
 
 int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
