@@ -53,6 +53,7 @@ void setupStrips() {
   smallStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
   smallStrip.clear(); // Set all pixel colors to 'off'
   smallStrip.show(); // Initialize all pixels to 'off'
+  Serial.println("Done setting up strips!");
 }
 
 void loop() {
@@ -88,14 +89,17 @@ void moveElectronFoward() {
   moveColorFowardOnce(&innerStrip, innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerStripPixelIndex, innerPixelAmount); // Move the inner electron foward
   moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount); // Move the outer electron foward
   moveColorFowardOnce(&smallStrip, smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallStripPixelIndex, SMALLPIXELAMOUNT); // Move the small electron foward
+  Serial.println("Done moving electrons foward!");
   // Increase the pixel indexes
   innerStripPixelIndex++; // Increase the inner strip pixel index by one
   outerStripPixelIndex++; // Increase the outer strip pixel index by one
   smallStripPixelIndex++; // Increase the small strip pixel index by one
   if (innerStripPixelIndex > innerStrip.numPixels()) {
+    Serial.println("Resetting inner strip pixel index");
     innerStripPixelIndex = 0;
   }
   if (outerStripPixelIndex > outerStrip.numPixels()) {
+    Serial.println("Resetting outer strip pixel index");
     outerStripPixelIndex = 0;
   }
 }
