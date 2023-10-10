@@ -13,7 +13,7 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
 
 void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels) {
     strip->clear(); // Clear the strip
-    strip->fill(backgroundColor, 0, strip->numPixels()); // Set the background color
+    strip->fill(backgroundColor, 0); // Set the background color
     for (int i=0; i<numPixels; i++) {
       setPixel(strip, i*PIXELSPACE + index, color);
     }
