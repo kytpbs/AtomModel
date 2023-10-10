@@ -1,6 +1,6 @@
-#define OUTNUMPIXELS 150 // The number of LEDs in the outer strip
-#define INNUMPIXELS 186 // The number of LEDs in the inner strip
-#define SMALLNUMPIXELS 8 // The number of LEDs in the small strip
+#define OUTNUMPIXELS 160 // The number of LEDs in the outer strip
+#define INNUMPIXELS 196 // The number of LEDs in the inner strip
+#define SMALLNUMPIXELS 128 // The number of LEDs in the small strip
 
 #define OUTDATA 13 // The pin that the outer strip is connected to
 #define INDATA 12 // The pin that the inner strip is connected to,
@@ -19,8 +19,8 @@
 #define BRIGHTNESS 255 // The brightness of the LEDS should be a value from 0 - 255
 
 //Electron Colors of the small Strip should be values from (0 - 255):
-#define smallRED 255
-#define smallGREEN 0
+#define smallRED 0
+#define smallGREEN 255
 #define smallBLUE 0
 
 //Electron Colors of the inner Stshould be values from (0 - 255):
@@ -45,7 +45,7 @@
 
 //Background Color Constants
 #define smallBACKGROUNDRED 0 // The amount of red in the background color
-#define smallBACKGROUNDGREEN 0 // The amount of green in the background color
+#define smallBACKGROUNDGREEN 100 // The amount of green in the background color
 #define smallBACKGROUNDBLUE 0 // The amount of blue in the background color
 
 #define innerBACKGROUNDRED 0 // The amount of red in the background color
