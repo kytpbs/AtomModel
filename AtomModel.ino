@@ -22,9 +22,10 @@ bool wasTogether = true; // This is used to check if the two pixels were togethe
 void setup() {
   Serial.begin(115200); // Start the serial connection
   while (!Serial) { // Wait for the serial connection to be establised.
-    if (millis() > 4000) {
-      break; // If we don't get a serial connection in 4 seconds, stop waiting.
+    if (millis() > 3000) {
+      break; // If we don't get a serial connection in 3 seconds, stop waiting.
     }
+    delay(100);
   }
   Serial.println("Serial connection established.");
   Serial.println("Setting up strips...");
