@@ -102,6 +102,10 @@ void moveElectronFoward() {
     Serial.println("Resetting outer strip pixel index");
     outerStripPixelIndex = 0;
   }
+  if (smallStripPixelIndex > smallStrip.numPixels()) {
+    Serial.println("Resetting small strip pixel index");
+    smallStripPixelIndex = 0;
+  }
 }
 
 void blinkAll(int delayTime, int times) {
