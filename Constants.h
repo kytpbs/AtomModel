@@ -6,14 +6,18 @@
 #define INDATA 12 // The pin that the inner strip is connected to,
 #define SMALLDATA 11 // The pin that the small strip is connected to
 
-#define PIXELAMOUNT 8 // The number of pixels that are lit up on each strip (will change on pixel switch)
+#define INPIXELAMOUNT 8 // The number of pixels that are lit up on each strips in total (will change on pixel switch)
+#define OUTPIXELAMOUNT 10 // The number of pixels that are lit up on the outside strips in total (will change on pixel switch)
 #define SMALLPIXELAMOUNT 2 // The number of pixels that are lit up on the small strip (will NOT change on pixel switch)
 
 /*
  * The number of pixels between the two pixels including the pixel that are lit up. Should be devidble by both the outer and inner number of pixels.
  * This is because we want the pixels to be evenly spaced out. IF THIS IS NOT TRUE, THE PIXELS WILL NOT BE EVENLY SPACED OUT.
 */
-#define PIXELSPACE 12
+#define DEFAULTPIXELSPACE 12
+#define INPIXELSPACE SMALLNUMPIXELS/SMALLPIXELAMOUNT
+#define OUTPIXELSPACE OUTNUMPIXELS/PIXELAMOUNT
+#define SMALLPIXELSPACE SMALLNUMPIXELS/SMALLPIXELAMOUNT
 
 
 #define BRIGHTNESS 255 // The brightness of the LEDS should be a value from 0 - 255
@@ -33,7 +37,7 @@
 #define outerGREEN 0
 #define outerBLUE 255
 
-#define DELAYTIME 25 // The amount of time between each pixel movement in milliseconds.
+#define DELAYTIME 1 // The amount of time between each pixel movement in milliseconds.
 #define TOGETHERAMOUNT 2 // The amount of times the pixels need to be together to switch
 
 //Blinking Constants
@@ -44,8 +48,8 @@
 #define BLINKBLUE 255 // The amount of blue in the blink
 
 //Background Color Constants
-#define smallBACKGROUNDRED 0 // The amount of red in the background color
-#define smallBACKGROUNDGREEN 100 // The amount of green in the background color
+#define smallBACKGROUNDRED 15 // The amount of red in the background color
+#define smallBACKGROUNDGREEN 0 // The amount of green in the background color
 #define smallBACKGROUNDBLUE 0 // The amount of blue in the background color
 
 #define innerBACKGROUNDRED 0 // The amount of red in the background color

@@ -25,4 +25,67 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color);
 */
 void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels);
 
+class NeoElectrons: public Adafruit_NeoPixel{
+    public:
+        uint32_t electronColor;
+        uint32_t backgroundColor;
+        int pixelSpace;
+        int electronAmount;
+        int electronIndex;
+        NeoElectrons();
+        NeoElectrons(uint16_t n, int16_t p, neoPixelType t);
+        NeoElectrons(uint16_t n, int16_t p);
+        void setup();
+        void setup(int brightness);
+        /**
+         * Sets the pixel at the given index to the given color
+         * Uses circular indexing, so if the index is greater than the number of pixels, it will wrap around
+         * Will not show the pixel unlike other functions. You must call strip.show() after calling this function
+        */
+        void setPixel(int index, uint32_t color);
+        /**
+         * Sets all the pixels to the given color
+         * It will show the pixels unlike the setPixel function
+         * @param STRIP: The strip to change the pixels of
+         * @param COLOR: The color to set the pixels to
+        */
+        void flushColor(uint32_t color);
+        /**
+         * Sets the colors of the electron and the background
+        */
+        void setColors(uint32_t electronColor, uint32_t backgroundColor);
+        /**
+         * Moves the electron foward once one pixel from the index
+         * Call this function periodically to move the electron foward
+         * Returns the 
+        */
+        int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int pixelAmount);
+        /**
+         * Moves the electron foward once one pixel from the index
+         * Call this function periodically to move the electron foward
+         * Returns the 
+        */
+        int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor);
+        /**
+         * Moves the electron foward once one pixel from the index
+         * Call this function periodically to move the electron foward
+         * Returns the 
+        */
+        int moveColorFowardOnce();
+};
+
+class NeoStrips {
+    private:
+        int stripAmount;
+        NeoElectrons* stripsArray;
+        int* electronIndexArray;
+    
+    public:
+        NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, int* electronColors, int* backgroundColors);
+        void blink();
+        void blink(unsigned int times);
+        void moveElectronsFoward();
+        bool areElectronsTogether(int strip1, int strip2);
+};
+
 #endif

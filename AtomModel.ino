@@ -2,9 +2,9 @@
 #include "Constants.h"
 #include "strips.h"
 
-Adafruit_NeoPixel smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
-Adafruit_NeoPixel innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
-Adafruit_NeoPixel outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
+NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
+NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
+NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
 
 int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
@@ -12,8 +12,8 @@ int smallStripPixelIndex = 0; // the index of the first electron / pixel in the 
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
-int innerPixelAmount = PIXELAMOUNT;
-int outerPixelAmount = PIXELAMOUNT;
+int innerPixelAmount = INPIXELAMOUNT;
+int outerPixelAmount = INPIXELAMOUNT;
 int smallPixelAmount = SMALLPIXELAMOUNT;
 
 // it is set to true because, we start with the two pixels together
@@ -94,6 +94,7 @@ void moveElectronFoward() {
   innerStripPixelIndex++; // Increase the inner strip pixel index by one
   outerStripPixelIndex++; // Increase the outer strip pixel index by one
   smallStripPixelIndex++; // Increase the small strip pixel index by one
+  
   if (innerStripPixelIndex > innerStrip.numPixels()) {
     Serial.println("Resetting inner strip pixel index");
     innerStripPixelIndex = 0;
