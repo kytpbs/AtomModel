@@ -1,6 +1,6 @@
 #define OUTNUMPIXELS 160 // The number of LEDs in the outer strip
 #define INNUMPIXELS 196 // The number of LEDs in the inner strip
-#define SMALLNUMPIXELS 128 // The number of LEDs in the small strip
+#define SMALLNUMPIXELS 116 // The number of LEDs in the small strip
 
 #define OUTDATA 13 // The pin that the outer strip is connected to
 #define INDATA 12 // The pin that the inner strip is connected to,
