@@ -79,7 +79,7 @@ void NeoElectrons::setColors(uint32_t electronColor, uint32_t backgroundColor) {
 }
 
 /* NEO STRIPS CLASS*/
-NeoStrips::NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, int* electronColors, int* backgroundColors) {
+NeoStrips::NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, uint32_t* electronColors, uint32_t* backgroundColors) {
     this->stripAmount = stripAmount;
     stripsArray = new NeoElectrons[stripAmount];
     electronIndexArray = new int[stripAmount];

@@ -81,7 +81,7 @@ class NeoStrips {
         int* electronIndexArray;
     
     public:
-        NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, int* electronColors, int* backgroundColors);
+        NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, uint32_t* electronColors, uint32_t* backgroundColors);
         void blink();
         void blink(unsigned int times);
         void moveElectronsFoward();
