@@ -107,6 +107,20 @@ void NeoStrips::moveElectronsFoward() {
     }
 }
 
+void NeoStrips::flushColor(uint32_t color) {
+    for (int i=0; i<stripAmount; i++) {
+        stripsArray[i].flushColor(color);
+        stripsArray[i].show();
+    }
+}
+
+void NeoStrips::clear() {
+    for (int i=0; i<stripAmount; i++) {
+        stripsArray[i].clear();
+        stripsArray[i].show();
+    }
+}
+
 void NeoStrips::blink() {
     for (int i=0; i<stripAmount; i++) {
         stripsArray[i].flushColor(stripsArray[i].electronColor);
@@ -126,4 +140,8 @@ void NeoStrips::blink(unsigned int times) {
 
 bool NeoStrips::areElectronsTogether(int strip1Index, int strip2Index) {
     return electronIndexArray[strip1Index] == electronIndexArray[strip1Index];
+}
+
+int NeoStrips::getStripElectronIndex(int stripIndex) {
+    return electronIndexArray[stripIndex];
 }

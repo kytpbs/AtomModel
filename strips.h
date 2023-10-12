@@ -83,9 +83,12 @@ class NeoStrips {
     public:
         NeoStrips(int stripAmount, int pixelAmount, int* stripPins, uint32_t electronColor, uint32_t backgroundColor);
         NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, uint32_t* electronColors, uint32_t* backgroundColors);
+        void flushColor(uint32_t color);
+        void clear();
         void blink();
         void blink(unsigned int times);
         void moveElectronsFoward();
+        int getStripElectronIndex(int stripIndex);
         bool areElectronsTogether(int strip1, int strip2);
 };
 
