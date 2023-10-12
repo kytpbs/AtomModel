@@ -90,6 +90,17 @@ NeoStrips::NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, uint32_
     }
 }
 
+NeoStrips::NeoStrips(int stripAmount, int pixelAmount, int* stripPins, uint32_t electronColor, uint32_t backgroundColor) {
+    this->stripAmount = stripAmount;
+    stripsArray = new NeoElectrons[stripAmount];
+    electronIndexArray = new int[stripAmount];
+    for (int i=0; i<stripAmount; i++) {
+        stripsArray[i] = NeoElectrons(pixelAmount, stripPins[i]);
+        stripsArray[i].setColors(electronColor, backgroundColor);
+        stripsArray[i].setup();
+    }
+}
+
 void NeoStrips::moveElectronsFoward() {
     for (int i=0; i<stripAmount; i++) {
         electronIndexArray[i] = stripsArray[i].moveColorFowardOnce();
