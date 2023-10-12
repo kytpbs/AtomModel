@@ -10,9 +10,10 @@ int innerDataPins[] = {INDATA1, INDATA2};
 NeoStrips outterStrips(3, OUTNUMPIXELS, outterDataPins, smallStrip.Color(outerRED, outerGREEN, outerBLUE), smallStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE));
 NeoStrips innerStrips(2, INNUMPIXELS, innerDataPins, smallStrip.Color(innerRED, innerGREEN, innerBLUE), smallStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE));
 
-int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
-int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
-int smallStripPixelIndex = 0; // the index of the first electron / pixel in the small strip
+int innerStripPixelIndex = 0; // the index of the first electron in the inner strip
+int outerStripPixelIndex = 0; // the index of the first electron in the outer strip
+int smallStripPixelIndex = 0; // the index of the first electron in the small strip
+
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
@@ -21,7 +22,7 @@ int outerPixelAmount = INPIXELAMOUNT;
 int smallPixelAmount = SMALLPIXELAMOUNT;
 
 // it is set to true because, we start with the two pixels together
-bool wasTogether = true; // This is used to check if the two pixels were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
+bool wasTogether = true; // This is used to check if the two electrons were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
 
 void setup() {
   Serial.begin(115200); // Start the serial connection
