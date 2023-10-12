@@ -2,9 +2,9 @@
 #include "Constants.h"
 #include "strips.h"
 
-NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
-NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
-NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
+NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800, INPIXELSPACE); // Create the inner strip object
+NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE); // Create the outer strip object
+NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800, SMALLPIXELSPACE); // Create the small strip object
 
 int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
@@ -35,24 +35,18 @@ void setup() {
 void setupStrips() {
   // Setup inner strip
   Serial.println("Setting up inner strip...");
-  innerStrip.begin(); // This initializes the strip
-  innerStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
-  innerStrip.clear(); // Set all pixel colors to 'off'
-  innerStrip.show(); // Initialize all pixels to 'off'
+  innerStrip.setup(BRIGHTNESS); // This initializes the strip
+  innerStrip.pixelSpace = INPIXELSPACE; // Set the pixel space
   
   // Setup outer strip
   Serial.println("Setting up outer strip...");
-  outerStrip.begin(); // This initializes the strip
-  outerStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
-  outerStrip.clear(); // Set all pixel colors to 'off'
-  outerStrip.show(); // Initialize all pixels to 'off'
+  outerStrip.setup(BRIGHTNESS); // This initializes the strip
+  outerStrip.pixelSpace = OUTPIXELSPACE; // Set the pixel space
 
   // Setup small strip
   Serial.println("Setting up small strip...");
-  smallStrip.begin(); // This initializes the strip
-  smallStrip.setBrightness(BRIGHTNESS); // Set the brightness of the strip
-  smallStrip.clear(); // Set all pixel colors to 'off'
-  smallStrip.show(); // Initialize all pixels to 'off'
+  smallStrip.setup(BRIGHTNESS); // This initializes the strip
+  smallStrip.pixelSpace = SMALLPIXELSPACE; // Set the pixel space
   Serial.println("Done setting up strips!");
 }
 
@@ -86,10 +80,10 @@ void loop() {
 */
 void moveElectronFoward() {
   // Move the electrons foward
-  moveColorFowardOnce(&innerStrip, innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerStripPixelIndex, innerPixelAmount); // Move the inner electron foward
-  moveColorFowardOnce(&outerStrip, outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerStripPixelIndex, outerPixelAmount); // Move the outer electron foward
-  moveColorFowardOnce(&smallStrip, smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallStripPixelIndex, smallPixelAmount); // Move the small electron foward
-  Serial.println("Done moving electrons foward!");
+  innerStrip.moveColorFowardOnce(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerPixelAmount);
+  outerStrip.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
+  smallStrip.moveColorFowardOnce(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallPixelAmount);
+  
   // Increase the pixel indexes
   innerStripPixelIndex++; // Increase the inner strip pixel index by one
   outerStripPixelIndex++; // Increase the outer strip pixel index by one
