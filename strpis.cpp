@@ -11,11 +11,11 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
     strip->show();
 }
 
-void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels) {
+void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace) {
     strip->clear(); // Clear the strip
     strip->fill(backgroundColor, 0); // Set the background color
     for (int i=0; i<numPixels; i++) {
-      setPixel(strip, i*DEFAULTPIXELSPACE + index, color);
+      setPixel(strip, i*pixelSpace + index, color);
     }
     strip->show();
 }
@@ -32,6 +32,14 @@ NeoElectrons::NeoElectrons(uint16_t n, int16_t p, neoPixelType t): Adafruit_NeoP
 
 NeoElectrons::NeoElectrons(uint16_t n, int16_t p): Adafruit_NeoPixel(n, p) {
     this->pixelSpace = DEFAULTPIXELSPACE;
+}
+
+NeoElectrons::NeoElectrons(uint16_t n, int16_t p, neoPixelType t, int pixelSpace): Adafruit_NeoPixel(n, p, t) {
+    this->pixelSpace = pixelSpace;
+}
+
+NeoElectrons::NeoElectrons(uint16_t n, int16_t p, int pixelSpace): Adafruit_NeoPixel(n, p) {
+    this->pixelSpace = pixelSpace;
 }
 
 void NeoElectrons::setup(int brightness) {
@@ -54,14 +62,12 @@ void NeoElectrons::flushColor(uint32_t color) {
     show();
 }
 
-int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int pixelAmount) {
-    clear(); // Clear the strip
-    fill(backgroundColor); // Set the background color
-    for (int i=0; i<pixelAmount; i++) {
-        setPixel(i*pixelSpace + electronIndex, color);
+int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int activePixelAmount) {
+    moveColorFowardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
+    this->electronIndex++;
+    if (electronIndex >= numPixels()) {
+        electronIndex = 0;
     }
-    electronIndex = (electronIndex + 1) % pixelAmount;
-    show();
     return electronIndex;
 }
 

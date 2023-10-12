@@ -23,17 +23,20 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color);
  * @param INDEX: The index of the pixel to light up
  * @param NUMPIXELS: The number of pixels in the strip will be used to wrap around the index, will leave an empty between them (might change later, should I?)
 */
-void moveColorFowardOnce(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels);
+void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace);
 
 class NeoElectrons: public Adafruit_NeoPixel{
+    private:
     public:
         uint32_t electronColor;
         uint32_t backgroundColor;
         int pixelSpace;
         int electronAmount;
-        int electronIndex;
+        int electronIndex = 0;
         NeoElectrons();
+        NeoElectrons(uint16_t n, int16_t p, neoPixelType t, int pixelSpace);
         NeoElectrons(uint16_t n, int16_t p, neoPixelType t);
+        NeoElectrons(uint16_t n, int16_t p, int pixelSpace);
         NeoElectrons(uint16_t n, int16_t p);
         void setup();
         void setup(int brightness);
@@ -57,21 +60,33 @@ class NeoElectrons: public Adafruit_NeoPixel{
         /**
          * Moves the electron foward once one pixel from the index
          * Call this function periodically to move the electron foward
-         * Returns the 
+         * @return The Index of the first electron
         */
         int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int pixelAmount);
         /**
          * Moves the electron foward once one pixel from the index
          * Call this function periodically to move the electron foward
-         * Returns the 
+         * @return The Index of the first electron
         */
         int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor);
         /**
          * Moves the electron foward once one pixel from the index
          * Call this function periodically to move the electron foward
-         * Returns the 
+         * @return The Index of the first electron 
         */
         int moveColorFowardOnce();
+
+        /**
+         * Gets the index of the electron
+         * @return The index of the first electron
+        */
+        int getElectronIndex() {return electronIndex;}
+
+        /**
+         * Sets the index of the electron
+         * @param electronIndex: The index of the first electron
+        */
+        void setElectronIndex(int electronIndex) {this->electronIndex = electronIndex;}
 };
 
 class NeoStrips {

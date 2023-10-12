@@ -24,17 +24,17 @@
  * This is because we want the pixels to be evenly spaced out. IF THIS IS NOT TRUE, THE PIXELS WILL NOT BE EVENLY SPACED OUT.
 */
 #define DEFAULTPIXELSPACE 12
-#define INPIXELSPACE SMALLNUMPIXELS/SMALLPIXELAMOUNT
-#define OUTPIXELSPACE OUTNUMPIXELS/PIXELAMOUNT
+#define INPIXELSPACE INNUMPIXELS/INPIXELAMOUNT
+#define OUTPIXELSPACE OUTNUMPIXELS/OUTPIXELAMOUNT
 #define SMALLPIXELSPACE SMALLNUMPIXELS/SMALLPIXELAMOUNT
 
 
 #define BRIGHTNESS 255 // The brightness of the LEDS should be a value from 0 - 255
 
 //Electron Colors of the small Strip should be values from (0 - 255):
-#define smallRED 0
-#define smallGREEN 255
-#define smallBLUE 0
+#define smallRED 255
+#define smallGREEN 0
+#define smallBLUE 180
 
 //Electron Colors of the inner Stshould be values from (0 - 255):
 #define innerRED 255
@@ -46,7 +46,7 @@
 #define outerGREEN 0
 #define outerBLUE 255
 
-#define DELAYTIME 1 // The amount of time between each pixel movement in milliseconds.
+#define DELAYTIME 0 // The amount of time between each pixel movement in milliseconds.
 #define TOGETHERAMOUNT 2 // The amount of times the pixels need to be together to switch
 
 //Blinking Constants
@@ -57,13 +57,13 @@
 #define BLINKBLUE 255 // The amount of blue in the blink
 
 //Background Color Constants
-#define smallBACKGROUNDRED 15 // The amount of red in the background color
-#define smallBACKGROUNDGREEN 0 // The amount of green in the background color
-#define smallBACKGROUNDBLUE 0 // The amount of blue in the background color
+#define smallBACKGROUNDRED 0 // The amount of red in the background color
+#define smallBACKGROUNDGREEN 2 // The amount of green in the background color
+#define smallBACKGROUNDBLUE 10 // The amount of blue in the background color
 
-#define innerBACKGROUNDRED 0 // The amount of red in the background color
-#define innerBACKGROUNDGREEN 5 // The amount of green in the background color
-#define innerBACKGROUNDBLUE 0 // The amount of blue in the background color
+#define innerBACKGROUNDRED 8 // The amount of red in the background color
+#define innerBACKGROUNDGREEN 0 // The amount of green in the background color
+#define innerBACKGROUNDBLUE 2 // The amount of blue in the background color
 
 #define outerBACKGROUNDRED 400/100 // The amount of red in the outer background color
 #define outerBACKGROUNDGREEN 165/100 // The amount of green in the outer background color

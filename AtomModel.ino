@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "strips.h"
 
+
 NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
 
 int outterDataPins[] = {OUTDATA1, OUTDATA2, OUTDATA3};
@@ -71,9 +72,9 @@ void loop() {
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveElectronFoward() {
+  smallStrip.moveColorFowardOnce(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallPixelAmount);
   innerStrips.moveElectronsFoward();
   outterStrips.moveElectronsFoward();
-  moveColorFowardOnce(&smallStrip, smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallStripPixelIndex, smallPixelAmount); // Move the small electron foward
   Serial.println("Done moving electrons foward!");
   // Increase the pixel indexes
   innerStripPixelIndex++; // Increase the inner strip pixel index by one
