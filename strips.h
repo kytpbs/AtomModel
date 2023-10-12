@@ -57,19 +57,19 @@ class NeoElectrons: public Adafruit_NeoPixel{
         /**
          * Moves the electron foward once one pixel from the index
          * Call this function periodically to move the electron foward
-         * Returns the 
+         * @return The Index of the first electron
         */
         int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int pixelAmount);
         /**
          * Moves the electron foward once one pixel from the index
          * Call this function periodically to move the electron foward
-         * Returns the 
+         * @return The Index of the first electron
         */
         int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor);
         /**
          * Moves the electron foward once one pixel from the index
          * Call this function periodically to move the electron foward
-         * Returns the 
+         * @return The Index of the first electron 
         */
         int moveColorFowardOnce();
 };
