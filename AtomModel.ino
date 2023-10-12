@@ -14,6 +14,7 @@ int innerStripPixelIndex = 0; // the index of the first electron in the inner st
 int outerStripPixelIndex = 0; // the index of the first electron in the outer strip
 int smallStripPixelIndex = 0; // the index of the first electron in the small strip
 
+unsigned long lastTime = 0; // The last time we blinked the pixels
 int togetherAmount = 0;
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
@@ -45,7 +46,8 @@ void setupStrips() {
 }
 
 void loop() {
-  if (innerStripPixelIndex == outerStripPixelIndex) { // If the two pixels are together
+  //TODO: Change to millis()
+  if (innerStrips.getStripElectronIndex(0) == outterStrips.getStripElectronIndex(0)) { // If the two pixels are together
     if (!wasTogether) {
       wasTogether = true;
       Serial.print("Wasn't together before, increasing together amount, New together Amount");
@@ -78,8 +80,6 @@ void moveElectronFoward() {
   outterStrips.moveElectronsFoward();
   Serial.println("Done moving electrons foward!");
   // Increase the pixel indexes
-  innerStripPixelIndex++; // Increase the inner strip pixel index by one
-  outerStripPixelIndex++; // Increase the outer strip pixel index by one
   smallStripPixelIndex++; // Increase the small strip pixel index by one
   
   if (smallStripPixelIndex > smallStrip.numPixels()) {
