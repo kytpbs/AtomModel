@@ -92,7 +92,7 @@ void blinkAll(int delayTime, int times) {
     outterStrips.flushColor(smallStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
     delay(delayTime);
     innerStrips.clear();
-    outerStrips.clear();
+    outterStrips.clear();
     delay(delayTime);
   }
 }
