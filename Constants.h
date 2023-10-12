@@ -6,6 +6,15 @@
 #define INDATA 12 // The pin that the inner strip is connected to,
 #define SMALLDATA 11 // The pin that the small strip is connected to
 
+/* NEW DEFFINITONS */
+#define OUTDATA1 13 // The pin that the outer strip1 is connected to
+#define OUTDATA2 12 // The pin that the outer strip2 is connected to
+#define OUTDATA3 11 // The pin that the outer strip3 is connected to
+
+#define INDATA1 10 // The pin that the inner strip1 is connected to
+#define INDATA2 9 // The pin that the inner strip2 is connected to
+
+
 #define INPIXELAMOUNT 8 // The number of pixels that are lit up on each strips in total (will change on pixel switch)
 #define OUTPIXELAMOUNT 10 // The number of pixels that are lit up on the outside strips in total (will change on pixel switch)
 #define SMALLPIXELAMOUNT 2 // The number of pixels that are lit up on the small strip (will NOT change on pixel switch)

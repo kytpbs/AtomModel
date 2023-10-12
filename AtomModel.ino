@@ -2,9 +2,13 @@
 #include "Constants.h"
 #include "strips.h"
 
-NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800, INPIXELSPACE); // Create the inner strip object
-NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE); // Create the outer strip object
-NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800, SMALLPIXELSPACE); // Create the small strip object
+
+NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
+
+int outterDataPins[] = {OUTDATA1, OUTDATA2, OUTDATA3};
+int innerDataPins[] = {INDATA1, INDATA2};
+NeoStrips outterStrips(3, OUTNUMPIXELS, outterDataPins, smallStrip.Color(outerRED, outerGREEN, outerBLUE), smallStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE));
+NeoStrips innerStrips(2, INNUMPIXELS, innerDataPins, smallStrip.Color(innerRED, innerGREEN, innerBLUE), smallStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE));
 
 int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
@@ -33,20 +37,9 @@ void setup() {
 }
 
 void setupStrips() {
-  // Setup inner strip
-  Serial.println("Setting up inner strip...");
-  innerStrip.setup(BRIGHTNESS); // This initializes the strip
-  innerStrip.pixelSpace = INPIXELSPACE; // Set the pixel space
-  
-  // Setup outer strip
-  Serial.println("Setting up outer strip...");
-  outerStrip.setup(BRIGHTNESS); // This initializes the strip
-  outerStrip.pixelSpace = OUTPIXELSPACE; // Set the pixel space
-
   // Setup small strip
   Serial.println("Setting up small strip...");
-  smallStrip.setup(BRIGHTNESS); // This initializes the strip
-  smallStrip.pixelSpace = SMALLPIXELSPACE; // Set the pixel space
+  smallStrip.setup(BRIGHTNESS);
   Serial.println("Done setting up strips!");
 }
 
@@ -79,24 +72,15 @@ void loop() {
  * Moves the red color by one pixel from the back to the front removing the red color from the back
 */
 void moveElectronFoward() {
-  // Move the electrons foward
-  innerStrip.moveColorFowardOnce(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerPixelAmount);
-  outerStrip.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
   smallStrip.moveColorFowardOnce(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallPixelAmount);
-  
+  innerStrips.moveElectronsFoward();
+  outterStrips.moveElectronsFoward();
+  Serial.println("Done moving electrons foward!");
   // Increase the pixel indexes
   innerStripPixelIndex++; // Increase the inner strip pixel index by one
   outerStripPixelIndex++; // Increase the outer strip pixel index by one
   smallStripPixelIndex++; // Increase the small strip pixel index by one
   
-  if (innerStripPixelIndex > innerStrip.numPixels()) {
-    Serial.println("Resetting inner strip pixel index");
-    innerStripPixelIndex = 0;
-  }
-  if (outerStripPixelIndex > outerStrip.numPixels()) {
-    Serial.println("Resetting outer strip pixel index");
-    outerStripPixelIndex = 0;
-  }
   if (smallStripPixelIndex > smallStrip.numPixels()) {
     Serial.println("Resetting small strip pixel index");
     smallStripPixelIndex = 0;
@@ -105,13 +89,11 @@ void moveElectronFoward() {
 
 void blinkAll(int delayTime, int times) {
   for (int i=0; i<times; i++) {
-    flushColor(&innerStrip, innerStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
-    flushColor(&outerStrip, outerStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
+    innerStrips.flushColor(smallStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
+    outterStrips.flushColor(smallStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
     delay(delayTime);
-    innerStrip.clear();
-    outerStrip.clear();
-    innerStrip.show();
-    outerStrip.show();
+    innerStrips.clear();
+    outterStrips.clear();
     delay(delayTime);
   }
 }
