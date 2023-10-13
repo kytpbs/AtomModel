@@ -1,3 +1,7 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+
 #define OUTNUMPIXELS 160 // The number of LEDs in the outer strip
 #define INNUMPIXELS 196 // The number of LEDs in the inner strip
 #define SMALLNUMPIXELS 116 // The number of LEDs in the small strip
@@ -70,3 +74,6 @@
 #define outerBACKGROUNDRED 400/100 // The amount of red in the outer background color
 #define outerBACKGROUNDGREEN 165/100 // The amount of green in the outer background color
 #define outerBACKGROUNDBLUE 0 // The amount of blue in the outer background color
+
+
+#endif
