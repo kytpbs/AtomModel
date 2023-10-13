@@ -87,6 +87,13 @@ class NeoElectrons: public Adafruit_NeoPixel{
          * @param electronIndex: The index of the first electron
         */
         void setElectronIndex(int electronIndex) {this->electronIndex = electronIndex;}
+
+        bool operator ==(const NeoElectrons &other) {return electronIndex == other.electronIndex;}
+        bool operator !=(const NeoElectrons &other) {return electronIndex != other.electronIndex;}
+        bool operator <(const NeoElectrons &other) {return electronIndex < other.electronIndex;}
+        bool operator >(const NeoElectrons &other) {return electronIndex > other.electronIndex;}
+        bool operator <=(const NeoElectrons &other) {return electronIndex <= other.electronIndex;}
+        bool operator >=(const NeoElectrons &other) {return electronIndex >= other.electronIndex;}
 };
 
 class NeoStrips {
