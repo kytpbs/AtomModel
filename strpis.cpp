@@ -145,9 +145,9 @@ void NeoStrips::blink(unsigned int times) {
 }
 
 bool NeoStrips::areElectronsTogether(int strip1Index, int strip2Index) {
-    return electronIndexArray[strip1Index] == electronIndexArray[strip1Index];
+    return this->getStripElectronIndex(strip1Index) == this->getStripElectronIndex(strip2Index);
 }
 
 int NeoStrips::getStripElectronIndex(int stripIndex) {
-    return electronIndexArray[stripIndex];
+    return stripsArray[stripIndex].getElectronIndex();
 }
