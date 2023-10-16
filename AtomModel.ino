@@ -28,21 +28,30 @@ void setupStrips() {
   // Setup inner strips
   Serial.println("Setting up inner strip0...");
   innerStrip.setup(BRIGHTNESS); // This initializes the strip
+  innerStrip.setColors(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
+  innerStrip.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
 
   Serial.println("Setting up inner strip2...");
   innerStrip2.setup(BRIGHTNESS);
-      
+  innerStrip2.setColors(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
+  innerStrip2.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
+
   // Setup outer strip
   Serial.println("Setting up outer strip 0...");
   outerStrip.setup(BRIGHTNESS); // This initializes the strip
+  outerStrip.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
+  outerStrip.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
   Serial.println("Setting up outer strip 2...");
   outerStrip2.setup(BRIGHTNESS);
+  outerStrip2.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
+  outerStrip2.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
   // Setup small strip
   Serial.println("Setting up small strip...");
   smallStrip.setup(BRIGHTNESS); // This initializes the strip
-  smallStrip.pixelSpace = SMALLPIXELSPACE; // Set the pixel space
+  smallStrip.setColors(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE)); // Set the colors of the strip
+  smallStrip.setElectronAmont(SMALLPIXELAMOUNT); // Set the amount of electrons in the strip
   Serial.println("Done setting up strips!");
 }
 
@@ -59,7 +68,6 @@ void runSwitch() {
   Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
   lastSwitchTime = millis(); // Set the last switch time to the current time
   blinkAll(BLINKDELAY, BLINKAMOUNT); // Blink the pixels
-  togetherAmount = 0; // Reset the together amount
   switchPixel(); // Switch the pixels
   return;
 }
@@ -69,11 +77,11 @@ void runSwitch() {
 */
 void moveElectronFoward() {
   // Move the electrons foward
-  innerStrip.moveColorFowardOnce(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerPixelAmount);
-  innerStrip2.moveColorFowardOnce(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerPixelAmount);
-  outerStrip.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
-  outerStrip2.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
-  smallStrip.moveColorFowardOnce(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallPixelAmount);
+  innerStrip.moveColorFowardOnce();
+  innerStrip2.moveColorFowardOnce();
+  outerStrip.moveColorFowardOnce();
+  outerStrip2.moveColorFowardOnce();
+  smallStrip.moveColorFowardOnce();
 }
 
 void blinkAll(int delayTime, int times) {
