@@ -101,12 +101,12 @@ void blinkAll(int delayTime, int times) {
 }
 
 void switchPixel() {
-  if (innerPixelAmount <= outerPixelAmount) {
-    innerPixelAmount += 1;
-    outerPixelAmount -= 1;
+  if (innerStrip.electronAmount <= outerStrip.electronAmount) {
+    innerStrip.increaseElectronAmount();
+    outerStrip.decreaseElectronAmount();
   }
   else {
-    innerPixelAmount -= 1;
-    outerPixelAmount += 1;
+    innerStrip.decreaseElectronAmount();
+    outerStrip.increaseElectronAmount();
   }
 }

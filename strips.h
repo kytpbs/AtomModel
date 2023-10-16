@@ -87,6 +87,24 @@ class NeoElectrons: public Adafruit_NeoPixel{
          * @param electronIndex: The index of the first electron
         */
         void setElectronIndex(int electronIndex) {this->electronIndex = electronIndex;}
+
+        /**
+         * Sets the color of the Electron
+         * @param color: The color of the electron using the Color function
+        */
+        void setElectronColor(uint32_t color) {this->electronColor = color;}
+
+        /**
+         * Sets the background color of the Strip
+         * @param color: The color of the background using the Color function
+        */
+        void setBackgroundColor(uint32_t color) {this->backgroundColor = color;}
+
+        void setElectronAmont(int electronAmount) {this->electronAmount = electronAmount;}
+        
+        void increaseElectronAmount() {this->electronAmount++;}
+
+        void decreaseElectronAmount() {this->electronAmount--;}
 };
 
 class NeoStrips {
