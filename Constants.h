@@ -1,3 +1,5 @@
+#define SWITCHTIME 5 // The amount of time to switch the Electrons in seconds.
+
 #define OUTNUMPIXELS 160 // The number of LEDs in the outer strip
 #define INNUMPIXELS 196 // The number of LEDs in the inner strip
 #define SMALLNUMPIXELS 115 // The number of LEDs in the small strip
