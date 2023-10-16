@@ -8,19 +8,8 @@ NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800, SMALLPI
 NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800, INPIXELSPACE);
 NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE);
 
-int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
-int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
-int smallStripPixelIndex = 0; // the index of the first electron / pixel in the small strip
-int togetherAmount = 0;
 unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
-// I will use these variables when changing the amount of pixels that are lit up on each.
-int innerPixelAmount = INPIXELAMOUNT;
-int outerPixelAmount = INPIXELAMOUNT;
-int smallPixelAmount = SMALLPIXELAMOUNT;
-
-// it is set to true because, we start with the two pixels together
-bool wasTogether = true; // This is used to check if the two pixels were together in the last iteration, we use this so that we don't increase the togetherAmount every iteration they are together
 
 void setup() {
   Serial.begin(115200); // Start the serial connection
