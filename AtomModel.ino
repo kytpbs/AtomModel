@@ -12,6 +12,7 @@ int innerStripPixelIndex = 0; // the index of the first electron / pixel in the 
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
 int smallStripPixelIndex = 0; // the index of the first electron / pixel in the small strip
 int togetherAmount = 0;
+unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
 // I will use these variables when changing the amount of pixels that are lit up on each.
 int innerPixelAmount = INPIXELAMOUNT;
@@ -57,28 +58,21 @@ void setupStrips() {
 }
 
 void loop() {
-  if (innerStripPixelIndex == outerStripPixelIndex) { // If the two pixels are together
-    if (!wasTogether) {
-      wasTogether = true;
-      Serial.print("Wasn't together before, increasing together amount, New together Amount");
-      togetherAmount++; // Increase the together amount
-      Serial.println(togetherAmount);
-    }
-  } else if (wasTogether) {
-    wasTogether = false; // Reset the wasTogether variable
-    Serial.println("Was together before, setting together amount to 0");
-  }
-  
-  if (togetherAmount >= TOGETHERAMOUNT) { // Electron switch to the other side (>= incase error)
-    Serial.println("Blinking! as they were together for 5 times");
-    blinkAll(BLINKDELAY, BLINKAMOUNT); // Blink the pixels
-    togetherAmount = 0; // Reset the together amount
-    switchPixel(); // Switch the pixels
-    return;
+  if (millis() - lastSwitchTime >= SWITCHTIME * 1000) { // If it has been SWITCHTIME seconds since the last switch
+    runSwitch(); // Run the switch
   }
 
   moveElectronFoward(); // Move The Electrons Foward
   delay(DELAYTIME);
+}
+
+void runSwitch() {
+  Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
+  lastSwitchTime = millis(); // Set the last switch time to the current time
+  blinkAll(BLINKDELAY, BLINKAMOUNT); // Blink the pixels
+  togetherAmount = 0; // Reset the together amount
+  switchPixel(); // Switch the pixels
+  return;
 }
 
 /**
