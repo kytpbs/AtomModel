@@ -91,24 +91,6 @@ void moveElectronFoward() {
   outerStrip.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
   outerStrip2.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
   smallStrip.moveColorFowardOnce(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallPixelAmount);
-  
-  // Increase the pixel indexes
-  innerStripPixelIndex++; // Increase the inner strip pixel index by one
-  outerStripPixelIndex++; // Increase the outer strip pixel index by one
-  smallStripPixelIndex++; // Increase the small strip pixel index by one
-  
-  if (innerStripPixelIndex > innerStrip.numPixels()) {
-    Serial.println("Resetting inner strip pixel index");
-    innerStripPixelIndex = 0;
-  }
-  if (outerStripPixelIndex > outerStrip.numPixels()) {
-    Serial.println("Resetting outer strip pixel index");
-    outerStripPixelIndex = 0;
-  }
-  if (smallStripPixelIndex > smallStrip.numPixels()) {
-    Serial.println("Resetting small strip pixel index");
-    smallStripPixelIndex = 0;
-  }
 }
 
 void blinkAll(int delayTime, int times) {
