@@ -5,6 +5,8 @@
 NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800, INPIXELSPACE); // Create the inner strip object
 NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE); // Create the outer strip object
 NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800, SMALLPIXELSPACE); // Create the small strip object
+NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800, INPIXELSPACE);
+NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE);
 
 int innerStripPixelIndex = 0; // the index of the first electron / pixel in the inner strip
 int outerStripPixelIndex = 0; // the index of the first electron / pixel in the outer strip
@@ -33,15 +35,19 @@ void setup() {
 }
 
 void setupStrips() {
-  // Setup inner strip
-  Serial.println("Setting up inner strip...");
+  // Setup inner strips
+  Serial.println("Setting up inner strip0...");
   innerStrip.setup(BRIGHTNESS); // This initializes the strip
-  innerStrip.pixelSpace = INPIXELSPACE; // Set the pixel space
-  
+
+  Serial.println("Setting up inner strip2...");
+  innerStrip2.setup(BRIGHTNESS);
+      
   // Setup outer strip
-  Serial.println("Setting up outer strip...");
+  Serial.println("Setting up outer strip 0...");
   outerStrip.setup(BRIGHTNESS); // This initializes the strip
-  outerStrip.pixelSpace = OUTPIXELSPACE; // Set the pixel space
+
+  Serial.println("Setting up outer strip 2...");
+  outerStrip2.setup(BRIGHTNESS);
 
   // Setup small strip
   Serial.println("Setting up small strip...");
@@ -81,7 +87,9 @@ void loop() {
 void moveElectronFoward() {
   // Move the electrons foward
   innerStrip.moveColorFowardOnce(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerPixelAmount);
+  innerStrip2.moveColorFowardOnce(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE), innerPixelAmount);
   outerStrip.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
+  outerStrip2.moveColorFowardOnce(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE), outerPixelAmount);
   smallStrip.moveColorFowardOnce(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE), smallPixelAmount);
   
   // Increase the pixel indexes
