@@ -61,13 +61,14 @@ void loop() {
   }
 
   moveElectronFoward(); // Move The Electrons Foward
+  updateBlinks(); // Run the updateBlink function for all the strips
   delay(DELAYTIME);
 }
 
 void runSwitch() {
   Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
   lastSwitchTime = millis(); // Set the last switch time to the current time
-  blinkAll(BLINKDELAY, BLINKAMOUNT); // Blink the pixels
+  blinkAll(BLINKAMOUNT); // Blink the pixels
   switchPixel(); // Switch the pixels
   return;
 }
@@ -84,17 +85,17 @@ void moveElectronFoward() {
   smallStrip.moveColorFowardOnce();
 }
 
-void blinkAll(int delayTime, int times) {
-  for (int i=0; i<times; i++) {
-    flushColor(&innerStrip, innerStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
-    flushColor(&outerStrip, outerStrip.Color(BLINKRED, BLINKGREEN, BLINKBLUE));
-    delay(delayTime);
-    innerStrip.clear();
-    outerStrip.clear();
-    innerStrip.show();
-    outerStrip.show();
-    delay(delayTime);
-  }
+void updateBlinks() {
+  innerStrip.updateBlink();
+  innerStrip2.updateBlink();
+  outerStrip.updateBlink();
+  outerStrip2.updateBlink();
+  smallStrip.updateBlink();
+}
+
+void blinkAll(int times) {
+  innerStrip.startBlink(times);
+  outerStrip.startBlink(times);
 }
 
 void switchPixel() {
