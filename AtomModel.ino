@@ -1,4 +1,3 @@
-#include <Adafruit_NeoPixel.h>
 #include "Constants.h"
 #include "strips.h"
 
