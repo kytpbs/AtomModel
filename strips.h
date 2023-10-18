@@ -1,7 +1,9 @@
+#include <Adafruit_NeoPixel.h>
+#include "Constants.h"
+
 #ifndef STRIPS_H
 #define STRIPS_H
 
-#include <Adafruit_NeoPixel.h>
 
 /**
  * Sets the pixel at the given index to the given color
@@ -27,9 +29,13 @@ void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t b
 
 class NeoElectrons: public Adafruit_NeoPixel{
     private:
+        unsigned long blinkStartTime = 0;
+        unsigned int blinkTimes = 0;
     public:
         uint32_t electronColor;
         uint32_t backgroundColor;
+        uint32_t blinkColor = Color(BLINKRED, BLINKGREEN, BLINKBLUE);
+        int blinkWaitTime = BLINKDELAY;
         int pixelSpace;
         int electronAmount;
         int electronIndex = 0;
@@ -82,6 +88,31 @@ class NeoElectrons: public Adafruit_NeoPixel{
         */
         int getElectronIndex() {return electronIndex;}
 
+        /* BLINK FUNCTIONS */
+        
+        /**
+         * Starts the blink.
+        */
+        void startBlink(int times = 1) {blinkTimes = times; blinkStartTime = millis();}
+
+        /**
+         * Checks if it should be blinking and blinks if it should
+         * Should be called in the loop function for the blink to work
+        */
+        void updateBlink(int delay);
+
+        /**
+         * Checks if it should be blinking and blinks if it should
+         * Should be called in the loop function for the blink to work
+        */
+        void updateBlink() {updateBlink(blinkWaitTime);}
+
+        /**
+         * Uses the blinkTimes variable to check if it is currently blinking
+         * @return If it is currently blinking, returns true, otherwise returns false
+        */
+        bool isBlinking() {return blinkTimes > 0;}
+        
         /**
          * Sets the index of the electron
          * @param electronIndex: The index of the first electron
@@ -100,10 +131,20 @@ class NeoElectrons: public Adafruit_NeoPixel{
         */
         void setBackgroundColor(uint32_t color) {this->backgroundColor = color;}
 
+        /**
+         * Sets the amount of electrons in the strip
+         * @param electronAmount: The amount of electrons in the strip
+        */
         void setElectronAmont(int electronAmount) {this->electronAmount = electronAmount;}
         
+        /**
+         * Increases the amount of electrons in the strip by one
+        */
         void increaseElectronAmount() {this->electronAmount++;}
 
+        /**
+         * Decreases the amount of electrons in the strip by one
+        */
         void decreaseElectronAmount() {this->electronAmount--;}
 };
 

@@ -1,6 +1,4 @@
-#include <Adafruit_NeoPixel.h>
 #include "strips.h"
-#include "Constants.h"
 
 void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color) {
     strip->setPixelColor(index % strip->numPixels(), color);
@@ -63,6 +61,9 @@ void NeoElectrons::flushColor(uint32_t color) {
 }
 
 int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int activePixelAmount) {
+    if (isBlinking()) {
+        return electronIndex;
+    }
     moveColorFowardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
     this->electronIndex++;
     if (electronIndex >= numPixels()) {
@@ -83,6 +84,24 @@ void NeoElectrons::setColors(uint32_t electronColor, uint32_t backgroundColor) {
     this->electronColor = electronColor;
     this->backgroundColor = backgroundColor;
 }
+
+void NeoElectrons::updateBlink(int delay) {
+    if (isBlinking()) {
+        // If the blink has finished
+        if (millis() - blinkStartTime >= delay) {
+            blinkStartTime = millis();
+            clear();
+            show();
+            blinkTimes--;
+        }
+        else {
+            flushColor(blinkColor);
+        }
+    }
+}
+
+
+
 
 /* NEO STRIPS CLASS*/
 NeoStrips::NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, uint32_t* electronColors, uint32_t* backgroundColors) {
