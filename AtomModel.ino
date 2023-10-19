@@ -1,5 +1,6 @@
 #include "Constants.h"
 #include "strips.h"
+#include "thingProperties.h"
 
 NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800, INPIXELSPACE); // Create the inner strip object
 NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE); // Create the outer strip object
@@ -21,6 +22,36 @@ void setup() {
   Serial.println("Serial connection established.");
   Serial.println("Setting up strips...");
   setupStrips();
+  cloudSetup();
+}
+
+void cloudSetup() {
+  // Defined in thingProperties.h
+  initProperties();
+
+  // Connect to Arduino IoT Cloud
+  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+  
+  /*
+     The following function allows you to obtain more information
+     related to the state of network and IoT Cloud connection and errors
+     the higher number the more granular information you’ll get.
+     The default is 0 (only errors).
+     Maximum is 4
+ */
+  setDebugMessageLevel(2);
+  ArduinoCloud.printDebugInfo();
+
+  // Set the colors of the strips
+  innerStripColor = Color(innerRED, innerGREEN, innerBLUE);
+  outerStripColor = Color(outerRED, outerGREEN, outerBLUE);
+  smallStripColor = Color(smallRED, smallGREEN, smallBLUE);
+  // Multi-threading setup
+  Serial.print("Setup currently running on core: ");
+  Serial.println(xPortGetCoreID());
+  delay(500);
+  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, 0, NULL);
+  delay(1000);
 }
 
 void setupStrips() {
@@ -55,6 +86,9 @@ void setupStrips() {
 }
 
 void loop() {
+  Serial.print("Loop currently running on core: ");
+  Serial.println(xPortGetCoreID());  
+
   if (millis() - lastSwitchTime >= SWITCHTIME * 1000) { // If it has been SWITCHTIME seconds since the last switch
     runSwitch(); // Run the switch
   }
@@ -62,6 +96,12 @@ void loop() {
   moveElectronFoward(); // Move The Electrons Foward
   updateBlinks(); // Run the updateBlink function for all the strips
   delay(DELAYTIME);
+}
+
+void cloudLoop(void *pvParameters) {
+  for (;;) {
+    ArduinoCloud.update();
+  }
 }
 
 void runSwitch() {
@@ -106,4 +146,21 @@ void switchPixel() {
     innerStrip.decreaseElectronAmount();
     outerStrip.increaseElectronAmount();
   }
+}
+
+void onInnerStripColorChange() {
+  Color color = innerStripColor.getValue();
+  innerStrip.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
+  innerStrip2.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
+}
+
+void onOuterStripColorChange() {
+  Color color = outerStripColor.getValue();
+  outerStrip.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
+  outerStrip2.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
+}
+
+void onSmallStripColorChange() {
+  Color color = smallStripColor.getValue();
+  smallStrip.setElectronColor(smallStrip.ColorHSV(color.hue, color.sat, color.bri));
 }
