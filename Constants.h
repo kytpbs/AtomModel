@@ -4,11 +4,11 @@
 #define INNUMPIXELS 196 // The number of LEDs in the inner strip
 #define SMALLNUMPIXELS 115 // The number of LEDs in the small strip
 
-#define OUTDATA 13 // The pin that the outer strip is connected to
-#define OUTDATA2 10 // The pin that the outer strip is connected to
-#define INDATA 12 // The pin that the inner strip is connected to,
-#define INDATA2 9 // The pin that the inner strip is connected to,
-#define SMALLDATA 11 // The pin that the small strip is connected to
+#define OUTDATA 26 // The pin that the outer strip is connected to
+#define OUTDATA2 25 // The pin that the outer strip is connected to
+#define INDATA 17 // The pin that the inner strip is connected to,
+#define INDATA2 16 // The pin that the inner strip is connected to,
+#define SMALLDATA 27 // The pin that the small strip is connected to
 
 #define INPIXELAMOUNT 8 // The number of pixels that are lit up on each strips in total (will change on pixel switch)
 #define OUTPIXELAMOUNT 10 // The number of pixels that are lit up on the outside strips in total (will change on pixel switch)
