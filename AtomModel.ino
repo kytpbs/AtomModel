@@ -7,6 +7,7 @@ NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create 
 NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
 NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800); // Create the second inner strip object
 NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800); // Create the second outer strip object
+NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800); // Create the third outer strip object
 
 unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
@@ -77,6 +78,10 @@ void setupStrips() {
   outerStrip2.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
   outerStrip2.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
+  Serial.println("Setting up outer strip 3...");
+  outerStrip3.setup(BRIGHTNESS);
+  outerStrip3.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
+  outerStrip3.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
   // Setup small strip
   Serial.println("Setting up small strip...");
   smallStrip.setup(BRIGHTNESS); // This initializes the strip
