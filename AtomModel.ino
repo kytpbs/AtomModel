@@ -2,10 +2,10 @@
 #include "strips.h"
 #include "thingProperties.h"
 
-NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
-NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
 NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
+NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
 NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800); // Create the second inner strip object
+NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
 NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800); // Create the second outer strip object
 NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800); // Create the third outer strip object
 
@@ -66,7 +66,7 @@ void cloudSetup() {
 
 void setupStrips() {
   // Setup inner strips
-  Serial.println("Setting up inner strip0...");
+  Serial.println("Setting up inner strip1...");
   innerStrip.setup(BRIGHTNESS); // This initializes the strip
   innerStrip.setColors(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
   innerStrip.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
@@ -77,7 +77,7 @@ void setupStrips() {
   innerStrip2.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
 
   // Setup outer strip
-  Serial.println("Setting up outer strip 0...");
+  Serial.println("Setting up outer strip 1...");
   outerStrip.setup(BRIGHTNESS); // This initializes the strip
   outerStrip.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
   outerStrip.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
