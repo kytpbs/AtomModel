@@ -100,9 +100,6 @@ void setupStrips() {
 }
 
 void loop() {
-  Serial.print("Loop currently running on core: ");
-  Serial.println(xPortGetCoreID());  
-
   if (millis() - lastSwitchTime >= SWITCHTIME * 1000) { // If it has been SWITCHTIME seconds since the last switch
     runSwitch(); // Run the switch
   }
