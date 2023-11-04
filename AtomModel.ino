@@ -23,7 +23,16 @@ void setup() {
   Serial.println("Serial connection established.");
   Serial.println("Setting up strips...");
   setupStrips();
+
+#ifdef ARDUINO_ARCH_ESP32
+  Serial.println("On ESP, ENABLING CLOUD");
   cloudSetup();
+#elif defined(ARDUINO_ARCH_ESP8266)
+  Serial.println("On ESP8266, ENABLING CLOUD with lower Proiority");
+  cloudSetup();
+#else
+  Serial.println("On Unknown, NOT ENABLING CLOUD");
+#endif
 }
 
 void cloudSetup() {
