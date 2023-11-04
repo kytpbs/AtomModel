@@ -1,0 +1,5 @@
+[wokwi]
+version = 0.8
+firmware = 'build/AtomModel.ino.bin'
+elf = 'build/AtomModel.ino.elf'
+rfc2217ServerPort = 4000

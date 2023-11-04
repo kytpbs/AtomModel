@@ -1,0 +1,73 @@
+{
+    "version": 1,
+    "author": "merhaba arkadaşlar",
+    "editor": "wokwi",
+    "parts": [
+      { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 105.6, "left": -158.36, "attrs": {} },
+      {
+        "type": "wokwi-led-ring",
+        "id": "ring1",
+        "top": -152.96,
+        "left": -238.81,
+        "attrs": { "pixels": "196" }
+      },
+      {
+        "type": "wokwi-led-ring",
+        "id": "ring2",
+        "top": -152.96,
+        "left": -94.81,
+        "attrs": { "pixels": "196" }
+      },
+      {
+        "type": "wokwi-led-ring",
+        "id": "ring3",
+        "top": -152.96,
+        "left": 58.79,
+        "attrs": { "pixels": "196" }
+      },
+      {
+        "type": "wokwi-led-ring",
+        "id": "ring4",
+        "top": -152.96,
+        "left": 212.39,
+        "attrs": { "pixels": "160" }
+      },
+      {
+        "type": "wokwi-led-ring",
+        "id": "ring5",
+        "top": 39.04,
+        "left": 68.39,
+        "attrs": { "pixels": "160" }
+      },
+      {
+        "type": "wokwi-led-ring",
+        "id": "ring6",
+        "top": 39.04,
+        "left": 212.39,
+        "attrs": { "pixels": "115" }
+      }
+    ],
+    "connections": [
+      [ "esp:TX", "$serialMonitor:RX", "", [] ],
+      [ "esp:RX", "$serialMonitor:TX", "", [] ],
+      [ "ring1:GND", "esp:GND.1", "black", [ "v0" ] ],
+      [ "ring1:VCC", "esp:5V", "red", [ "v0" ] ],
+      [ "ring1:GND", "ring2:GND", "black", [ "v0" ] ],
+      [ "ring2:GND", "ring3:GND", "black", [ "v0" ] ],
+      [ "ring3:GND", "ring4:GND", "black", [ "v0" ] ],
+      [ "ring4:GND", "ring6:GND", "black", [ "v0" ] ],
+      [ "ring5:GND", "ring6:GND", "black", [ "v0" ] ],
+      [ "ring5:VCC", "ring6:VCC", "red", [ "v0" ] ],
+      [ "ring6:VCC", "ring4:VCC", "red", [ "v0" ] ],
+      [ "ring4:VCC", "ring3:VCC", "red", [ "v0" ] ],
+      [ "ring3:VCC", "ring2:VCC", "red", [ "v0" ] ],
+      [ "ring2:VCC", "ring1:VCC", "red", [ "v0" ] ],
+      [ "esp:23", "ring1:DIN", "green", [ "h0" ] ],
+      [ "esp:22", "ring2:DIN", "green", [ "h0" ] ],
+      [ "esp:21", "ring3:DIN", "green", [ "h0" ] ],
+      [ "esp:19", "ring4:DIN", "green", [ "h0" ] ],
+      [ "esp:18", "ring5:DIN", "green", [ "h0" ] ],
+      [ "esp:17", "ring6:DIN", "green", [ "h345.6", "v-38.4" ] ]
+    ],
+    "dependencies": {}
+}
