@@ -19,7 +19,7 @@
  * The number of pixels between the two pixels including the pixel that are lit up. Should be devidble by both the outer and inner number of pixels.
  * This is because we want the pixels to be evenly spaced out. IF THIS IS NOT TRUE, THE PIXELS WILL NOT BE EVENLY SPACED OUT.
 */
-#define DEFAULTPIXELSPACE 12
+#define DEFAULTPIXELSPACE -1
 #define INPIXELSPACE INNUMPIXELS/INPIXELAMOUNT
 #define OUTPIXELSPACE OUTNUMPIXELS/OUTPIXELAMOUNT
 #define SMALLPIXELSPACE SMALLNUMPIXELS/SMALLPIXELAMOUNT
