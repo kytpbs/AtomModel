@@ -1,11 +1,16 @@
 #include "Constants.h"
 #include "strips.h"
 
-NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800, INPIXELSPACE); // Create the inner strip object
-NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE); // Create the outer strip object
-NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800, SMALLPIXELSPACE); // Create the small strip object
-NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800, INPIXELSPACE); // Create the second inner strip object
-NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800, OUTPIXELSPACE); // Create the second outer strip object (this will be duplicated in hardware, so it controlls 2 strips)
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+#include "thingProperties.h"
+#endif
+
+NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
+NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
+NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800); // Create the second inner strip object
+NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
+NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800); // Create the second outer strip object
+NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800); // Create the third outer strip object
 
 unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
@@ -21,11 +26,52 @@ void setup() {
   Serial.println("Serial connection established.");
   Serial.println("Setting up strips...");
   setupStrips();
+
+#ifdef ARDUINO_ARCH_ESP32
+  Serial.println("On ESP, ENABLING CLOUD");
+  cloudSetup(2);
+#elif defined(ARDUINO_ARCH_ESP8266)
+  Serial.println("On ESP8266, ENABLING CLOUD with lower Proiority");
+  cloudSetup(6);
+#else
+  Serial.println("On Unknown, NOT ENABLING CLOUD");
+#endif
 }
+
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+void cloudSetup(int priority) {
+  // Defined in thingProperties.h
+  initProperties();
+
+  // Connect to Arduino IoT Cloud
+  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+  
+  /*
+     The following function allows you to obtain more information
+     related to the state of network and IoT Cloud connection and errors
+     the higher number the more granular information you’ll get.
+     The default is 0 (only errors).
+     Maximum is 4
+ */
+  setDebugMessageLevel(2);
+  ArduinoCloud.printDebugInfo();
+
+  // Set the colors of the strips
+  innerStripColor = Color(innerRED, innerGREEN, innerBLUE);
+  outerStripColor = Color(outerRED, outerGREEN, outerBLUE);
+  smallStripColor = Color(smallRED, smallGREEN, smallBLUE);
+  // Multi-threading setup
+  Serial.print("Setup currently running on core: ");
+  Serial.println(xPortGetCoreID());
+  delay(500);
+  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, priority, NULL);
+  delay(1000);
+}
+#endif
 
 void setupStrips() {
   // Setup inner strips
-  Serial.println("Setting up inner strip0...");
+  Serial.println("Setting up inner strip1...");
   innerStrip.setup(BRIGHTNESS); // This initializes the strip
   innerStrip.setColors(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
   innerStrip.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
@@ -36,7 +82,7 @@ void setupStrips() {
   innerStrip2.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
 
   // Setup outer strip
-  Serial.println("Setting up outer strip 0...");
+  Serial.println("Setting up outer strip 1...");
   outerStrip.setup(BRIGHTNESS); // This initializes the strip
   outerStrip.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
   outerStrip.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
@@ -46,6 +92,10 @@ void setupStrips() {
   outerStrip2.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
   outerStrip2.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
+  Serial.println("Setting up outer strip 3...");
+  outerStrip3.setup(BRIGHTNESS);
+  outerStrip3.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
+  outerStrip3.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
   // Setup small strip
   Serial.println("Setting up small strip...");
   smallStrip.setup(BRIGHTNESS); // This initializes the strip
@@ -63,6 +113,14 @@ void loop() {
   updateBlinks(); // Run the updateBlink function for all the strips
   delay(DELAYTIME);
 }
+
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+void cloudLoop(void *pvParameters) {
+  for (;;) {
+    ArduinoCloud.update();
+  }
+}
+#endif
 
 void runSwitch() {
   Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
@@ -107,3 +165,23 @@ void switchPixel() {
     outerStrip.increaseElectronAmount();
   }
 }
+
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+void onInnerStripColorChange() {
+  Color color = innerStripColor.getValue();
+  innerStrip.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
+  innerStrip2.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
+}
+
+void onOuterStripColorChange() {
+  Color color = outerStripColor.getValue();
+  outerStrip.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
+  outerStrip2.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
+  outerStrip3.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
+}
+
+void onSmallStripColorChange() {
+  Color color = smallStripColor.getValue();
+  smallStrip.setElectronColor(smallStrip.ColorHSV(color.hue, color.sat, color.bri));
+}
+#endif

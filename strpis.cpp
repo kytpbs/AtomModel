@@ -62,9 +62,17 @@ void NeoElectrons::flushColor(uint32_t color) {
 
 int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int activePixelAmount) {
     if (isBlinking()) {
-        return electronIndex;
+        return electronIndex; // If the strip is blinking, don't move the electrons
     }
+
+    if (pixelSpace == DEFAULTPIXELSPACE) {
+        pixelSpace = numPixels() / activePixelAmount;
+    }
+
+    // Move the electrons foward
     moveColorFowardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
+    
+    // Increase the electron index
     this->electronIndex++;
     if (electronIndex >= numPixels()) {
         electronIndex = 0;
