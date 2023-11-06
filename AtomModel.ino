@@ -114,11 +114,13 @@ void loop() {
   delay(DELAYTIME);
 }
 
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 void cloudLoop(void *pvParameters) {
   for (;;) {
     ArduinoCloud.update();
   }
 }
+#endif
 
 void runSwitch() {
   Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
@@ -164,6 +166,7 @@ void switchPixel() {
   }
 }
 
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 void onInnerStripColorChange() {
   Color color = innerStripColor.getValue();
   innerStrip.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
@@ -180,3 +183,4 @@ void onSmallStripColorChange() {
   Color color = smallStripColor.getValue();
   smallStrip.setElectronColor(smallStrip.ColorHSV(color.hue, color.sat, color.bri));
 }
+#endif
