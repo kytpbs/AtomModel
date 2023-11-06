@@ -19,7 +19,11 @@ jobs:
     - name: Build Arduino sketch
       uses: arduino/compile-sketches@v1
       with:
-        fqbn: "arduino:avr:mega"
+        fqbn:  |
+          - arduino:avr:mega
+          - arduino:avr:uno
+          - esp32:esp32:esp32
+          - esp8266:esp8266:generic
         sketch-paths: |
           - ./
         libraries: |
