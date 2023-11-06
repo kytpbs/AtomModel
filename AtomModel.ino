@@ -177,6 +177,7 @@ void onOuterStripColorChange() {
   Color color = outerStripColor.getValue();
   outerStrip.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
   outerStrip2.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
+  outerStrip3.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
 }
 
 void onSmallStripColorChange() {
