@@ -16,15 +16,52 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Build Arduino sketch
+    - name: Compile MEGA
       uses: arduino/compile-sketches@v1
       with:
-        fqbn:  |
-          - "arduino:avr:mega"
-          - "arduino:avr:uno"
-          - "esp32:esp32:esp32"
-          - "esp8266:esp8266:generic"
+        fqbn:  "arduino:avr:mega"
         sketch-paths: |
           - ./
         libraries: |
          - name: "Adafruit NeoPixel"
+
+    - name: Compile UNO
+      uses: arduino/compile-sketches@v1
+      with:
+        fqbn:  "arduino:avr:UNO"
+        sketch-paths: |
+          - ./
+        libraries: |
+         - name: "Adafruit NeoPixel"
+    
+         
+    - name: Compile ESP8266
+      uses: arduino/compile-sketches@v1
+      with:
+        fqbn:  "esp8266:esp8266:nodemcuv2"
+        platforms: |
+          - name: "esp8266:esp8266:nodemcuv2"
+            architecture: "esp8266"
+            board: "nodemcuv2"
+            platform: "https://arduino.esp8266.com/stable/package_esp8266com_index.json"
+        sketch-paths: |
+          - ./
+        libraries: |
+         - name: "Adafruit NeoPixel"
+    
+         
+    - name: Compile ESP32
+      uses: arduino/compile-sketches@v1
+      with:
+        fqbn:  "esp32:esp32:esp32"
+        platforms: |
+          - name: "esp32:esp32:esp32"
+            architecture: "esp32"
+            board: "esp32"
+            platform: "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
+        sketch-paths: |
+          - ./
+        libraries: |
+         - name: "Adafruit NeoPixel"
+         
+
