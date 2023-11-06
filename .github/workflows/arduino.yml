@@ -1,0 +1,24 @@
+name: Arduino MEGA
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Arduino CLI
+      uses: arduino/compile-sketches@v1
+      with:
+        fqbn: "arduino:avr:mega"
+        libraries: |
+         - name: "Adafruit NeoPixel"
