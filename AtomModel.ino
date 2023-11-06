@@ -1,6 +1,9 @@
 #include "Constants.h"
 #include "strips.h"
+
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 #include "thingProperties.h"
+#endif
 
 NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
 NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
@@ -26,16 +29,17 @@ void setup() {
 
 #ifdef ARDUINO_ARCH_ESP32
   Serial.println("On ESP, ENABLING CLOUD");
-  cloudSetup();
+  cloudSetup(2);
 #elif defined(ARDUINO_ARCH_ESP8266)
   Serial.println("On ESP8266, ENABLING CLOUD with lower Proiority");
-  cloudSetup();
+  cloudSetup(6);
 #else
   Serial.println("On Unknown, NOT ENABLING CLOUD");
 #endif
 }
 
-void cloudSetup() {
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+void cloudSetup(int priority) {
   // Defined in thingProperties.h
   initProperties();
 
@@ -60,9 +64,10 @@ void cloudSetup() {
   Serial.print("Setup currently running on core: ");
   Serial.println(xPortGetCoreID());
   delay(500);
-  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, 0, NULL);
+  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, priority, NULL);
   delay(1000);
 }
+#endif
 
 void setupStrips() {
   // Setup inner strips
