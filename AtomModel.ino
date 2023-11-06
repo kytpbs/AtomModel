@@ -139,6 +139,7 @@ void moveElectronFoward() {
   innerStrip2.moveColorFowardOnce();
   outerStrip.moveColorFowardOnce();
   outerStrip2.moveColorFowardOnce();
+  outerStrip3.moveColorFowardOnce();
   smallStrip.moveColorFowardOnce();
 }
 
@@ -147,6 +148,7 @@ void updateBlinks() {
   innerStrip2.updateBlink();
   outerStrip.updateBlink();
   outerStrip2.updateBlink();
+  outerStrip3.updateBlink();
   smallStrip.updateBlink();
 }
 
