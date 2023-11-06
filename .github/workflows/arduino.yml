@@ -20,5 +20,6 @@ jobs:
       uses: arduino/compile-sketches@v1
       with:
         fqbn: "arduino:avr:mega"
+        sketch-paths: "/"
         libraries: |
          - name: "Adafruit NeoPixel"
