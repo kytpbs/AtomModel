@@ -38,9 +38,9 @@ jobs:
     - name: Compile ESP8266
       uses: arduino/compile-sketches@v1
       with:
-        fqbn:  "arduino:esp8266:NodeMCU 1.0 (ESP-12E Module)"
+        fqbn:  "esp8266:esp8266:NodeMCU 1.0 (ESP-12E Module)"
         platforms: |
-          - name: "arduino:esp8266"
+          - name: "esp8266"
             architecture: "esp8266"
             board: "NodeMCU 1.0 (ESP-12E Module)"
             platform: "https://arduino.esp8266.com/stable/package_esp8266com_index.json"
