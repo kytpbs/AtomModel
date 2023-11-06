@@ -28,7 +28,7 @@ jobs:
     - name: Compile UNO
       uses: arduino/compile-sketches@v1
       with:
-        fqbn:  "arduino:avr:UNO"
+        fqbn:  "arduino:avr:uno"
         sketch-paths: |
           - ./
         libraries: |
