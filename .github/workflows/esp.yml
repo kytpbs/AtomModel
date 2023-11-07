@@ -10,7 +10,7 @@ on:
   release: {}
 
 jobs:
-  build:
+  esp8266Compile:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,17 +34,27 @@ jobs:
         libraries: |
          - name: "Adafruit NeoPixel"
          - name: "ArduinoIoTCloud"
+  
+  esp32Compile:
+    runs-on: ubuntu-latest
 
-
-    - name: Compile ESP32
-      uses: arduino/compile-sketches@v1
-      with:
-        fqbn:  "esp32:esp32:esp32"
-        platforms: |
-          - source-url: "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
-            name: "esp32:esp32"
-        sketch-paths: |
-          - ./
-        libraries: |
-         - name: "Adafruit NeoPixel"
-         - name: "ArduinoIoTCloud"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+  
+      - name: Create Arduino Secrets
+        run: |
+          echo "${{ secrets.ARDUINO_SECRETS }}" > ${{ github.workspace }}/arduino_secrets.h  
+      
+      - name: Compile ESP32
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn:  "esp32:esp32:esp32"
+          platforms: |
+            - source-url: "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
+              name: "esp32:esp32"
+          sketch-paths: |
+            - ./
+          libraries: |
+            - name: "Adafruit NeoPixel"
+            - name: "ArduinoIoTCloud"
