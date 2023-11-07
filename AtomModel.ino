@@ -143,6 +143,8 @@ void cloudLoop() {
 
 #if defined(ARDUINO_ARCH_ESP32) // only include if we are on an ESP
 void cloudLoop(void *pvParameters) {
+  Serial.print("Cloud Loop currently running on core: ");
+  Serial.println(xPortGetCoreID());
   for (;;) {
     ArduinoCloud.update();
   }
