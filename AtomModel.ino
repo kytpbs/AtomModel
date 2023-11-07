@@ -5,6 +5,10 @@
 #include "thingProperties.h"
 #endif
 
+#ifdef ARDUINO_ARCH_ESP8266
+unsigned long lastCloudUpdate = 0;
+#endif
+
 NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
 NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
 NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800); // Create the second inner strip object
@@ -29,45 +33,15 @@ void setup() {
 
 #ifdef ARDUINO_ARCH_ESP32
   Serial.println("On ESP, ENABLING CLOUD");
-  cloudSetup(2);
+  cloudSetup();
 #elif defined(ARDUINO_ARCH_ESP8266)
-  Serial.println("On ESP8266, ENABLING CLOUD with lower Proiority");
-  cloudSetup(6);
+  Serial.println("On ESP8266, ENABLING CLOUD (in main loop)");
+  cloudSetup();
 #else
   Serial.println("On Unknown, NOT ENABLING CLOUD");
 #endif
 }
 
-#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
-void cloudSetup(int priority) {
-  // Defined in thingProperties.h
-  initProperties();
-
-  // Connect to Arduino IoT Cloud
-  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
-  
-  /*
-     The following function allows you to obtain more information
-     related to the state of network and IoT Cloud connection and errors
-     the higher number the more granular information you’ll get.
-     The default is 0 (only errors).
-     Maximum is 4
- */
-  setDebugMessageLevel(2);
-  ArduinoCloud.printDebugInfo();
-
-  // Set the colors of the strips
-  innerStripColor = Color(innerRED, innerGREEN, innerBLUE);
-  outerStripColor = Color(outerRED, outerGREEN, outerBLUE);
-  smallStripColor = Color(smallRED, smallGREEN, smallBLUE);
-  // Multi-threading setup
-  Serial.print("Setup currently running on core: ");
-  Serial.println(xPortGetCoreID());
-  delay(500);
-  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, priority, NULL);
-  delay(1000);
-}
-#endif
 
 void setupStrips() {
   // Setup inner strips
@@ -104,10 +78,62 @@ void setupStrips() {
   Serial.println("Done setting up strips!");
 }
 
+
+#if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+void cloudSetup() {
+  // Defined in thingProperties.h
+  initProperties();
+
+  // Connect to Arduino IoT Cloud
+  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+  
+  /*
+     The following function allows you to obtain more information
+     related to the state of network and IoT Cloud connection and errors
+     the higher number the more granular information you’ll get.
+     The default is 0 (only errors).
+     Maximum is 4
+ */
+  setDebugMessageLevel(2);
+  ArduinoCloud.printDebugInfo();
+
+  // Set the colors of the strips
+  innerStripColor = Color(innerRED, innerGREEN, innerBLUE);
+  outerStripColor = Color(outerRED, outerGREEN, outerBLUE);
+  smallStripColor = Color(smallRED, smallGREEN, smallBLUE);
+  // Multi-threading setup
+  Serial.print("Setup currently running on core: ");
+  #ifdef ARDUINO_ARCH_ESP32
+  Serial.println(xPortGetCoreID());
+  delay(500);
+  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, 2, NULL);
+  delay(1000);
+  #elif defined(ARDUINO_ARCH_ESP8266)
+  delay(500);
+  // without using FreeRTOS, we can't do multi-threading, so we just run the cloud loop in the main loop, every minute or so
+  Serial.println("Running cloud loop in main loop every minute");
+  #endif
+}
+#endif
+
+
+#ifdef ARDUINO_ARCH_ESP8266
+void cloudLoop() {
+  if (millis() - lastCloudUpdate >= 60000) { // If it has been 60 seconds since the last cloud update
+    Serial.println("Updating cloud...");
+    ArduinoCloud.update();
+    lastCloudUpdate = millis();
+  }
+}
+#endif
+
 void loop() {
   if (millis() - lastSwitchTime >= SWITCHTIME * 1000) { // If it has been SWITCHTIME seconds since the last switch
     runSwitch(); // Run the switch
   }
+#ifdef ARDUINO_ARCH_ESP8266
+  cloudLoop();
+#endif
 
   moveElectronFoward(); // Move The Electrons Foward
   updateBlinks(); // Run the updateBlink function for all the strips
