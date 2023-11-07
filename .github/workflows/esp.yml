@@ -33,6 +33,7 @@ jobs:
           - ./
         libraries: |
          - name: "Adafruit NeoPixel"
+         - name: "ArduinoIoTCloud"
 
 
     - name: Compile ESP32
@@ -46,3 +47,4 @@ jobs:
           - ./
         libraries: |
          - name: "Adafruit NeoPixel"
+         - name: "ArduinoIoTCloud"
