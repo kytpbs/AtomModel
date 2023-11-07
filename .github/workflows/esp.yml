@@ -15,12 +15,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Create Arduino Secrets
-      run: |
-        echo "${{ secrets.ARDUINO_SECRETS }}" > ${{ github.workspace }}/arduino_secrets.h
-        
+      uses: actions/checkout@v3     
 
     - name: Compile ESP8266
       uses: arduino/compile-sketches@v1
@@ -34,18 +29,15 @@ jobs:
         libraries: |
          - name: "Adafruit NeoPixel"
          - name: "ArduinoIoTCloud"
-  
+
+
   esp32Compile:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-  
-      - name: Create Arduino Secrets
-        run: |
-          echo "${{ secrets.ARDUINO_SECRETS }}" > ${{ github.workspace }}/arduino_secrets.h  
-      
+
       - name: Compile ESP32
         uses: arduino/compile-sketches@v1
         with:
