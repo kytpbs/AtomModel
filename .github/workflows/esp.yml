@@ -17,9 +17,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Crate Arduino Secrets
+    - name: Create Arduino Secrets
       run: |
-        echo ${{ secrets.ARDUINO_SECRETS }} > ${{ github.workspace }}/arduino_secrets.h
+        echo "${{ secrets.ARDUINO_SECRETS }}" > ${{ github.workspace }}/arduino_secrets.h
         
 
     - name: Compile ESP8266
