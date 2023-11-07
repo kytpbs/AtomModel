@@ -148,19 +148,4 @@ class NeoElectrons: public Adafruit_NeoPixel{
         void decreaseElectronAmount() {this->electronAmount--;}
 };
 
-class NeoStrips {
-    private:
-        int stripAmount;
-        NeoElectrons* stripsArray;
-        int* electronIndexArray;
-    
-    public:
-        NeoStrips(int stripAmount, int pixelAmount, int* stripPins, uint32_t electronColor, uint32_t backgroundColor);
-        NeoStrips(int stripAmount, int* pixelAmounts, int* stripPins, uint32_t* electronColors, uint32_t* backgroundColors);
-        void blink();
-        void blink(unsigned int times);
-        void moveElectronsFoward();
-        bool areElectronsTogether(int strip1, int strip2);
-};
-
 #endif
