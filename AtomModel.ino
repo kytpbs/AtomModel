@@ -18,6 +18,8 @@ NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800); // Creat
 
 unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
+bool builtinLedState = false; // The state of the builtin led
+
 
 void setup() {
   Serial.begin(115200); // Start the serial connection
@@ -124,11 +126,20 @@ void loop() {
   }
 #ifdef ARDUINO_ARCH_ESP8266
   cloudLoop();
+elif defined(ARDUINO_ARCH_ESP32)
+  // nothing to do here, cloud loop is running on a separate thread
+#else
+  blinkbuiltinled(); // Blink the builtin led to show that the program is running, but not on an ESP as the pin changes from board to board, might change in the future
 #endif
 
   moveElectronFoward(); // Move The Electrons Foward
   updateBlinks(); // Run the updateBlink function for all the strips
   delay(DELAYTIME);
+}
+
+void blinkbuiltinled() {
+  builtinLedState = !builtinLedState;
+  digitalWrite(LED_BUILTIN, builtinLedState);
 }
 
 #ifdef ARDUINO_ARCH_ESP8266
