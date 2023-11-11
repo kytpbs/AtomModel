@@ -15,13 +15,17 @@ const char SSID[]               = SECRET_SSID;    // Network SSID (name)
 const char PASS[]               = SECRET_OPTIONAL_PASS;    // Network password (use for WPA, or use as key for WEP)
 const char DEVICE_KEY[]  = SECRET_DEVICE_KEY;    // Secret device password
 
+void onLedCountsChange();
 void onInnerStripColorChange();
 void onOuterStripColorChange();
 void onSmallStripColorChange();
+void onTriggerSwitchChange();
 
+String ledCounts;
 CloudColor innerStripColor;
 CloudColor outerStripColor;
 CloudColor smallStripColor;
+bool triggerSwitch;
 
 void initProperties(){
 

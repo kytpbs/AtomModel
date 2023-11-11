@@ -229,4 +229,28 @@ void onSmallStripColorChange() {
   Color color = smallStripColor.getValue();
   smallStrip.setElectronColor(smallStrip.ColorHSV(color.hue, color.sat, color.bri));
 }
+
+void onLedCountsChange() {
+  String tmpCounts = ledCounts;
+  tmpCounts.replace(" ", "");
+  tmpCounts.replace(",", "");
+  
+  int counts[6];
+  for(int i = 0; i < 6; i++) {
+    counts[i] = tmpCounts.substring(i, i + 1).toInt();
+  }
+  
+  smallStrip.setElectronAmont(counts[0]);
+
+  innerStrip.setElectronAmont(counts[1]);
+  innerStrip2.setElectronAmont(counts[2]);
+  
+  outerStrip.setElectronAmont(counts[3]);
+  outerStrip2.setElectronAmont(counts[4]);
+  outerStrip3.setElectronAmont(counts[5]);
+}
+
+void onTriggerSwitchChange() {
+  runSwitch();
+}
 #endif
