@@ -126,7 +126,7 @@ void loop() {
   }
 #ifdef ARDUINO_ARCH_ESP8266
   cloudLoop();
-elif defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_ESP32)
   // nothing to do here, cloud loop is running on a separate thread
 #else
   blinkbuiltinled(); // Blink the builtin led to show that the program is running, but not on an ESP as the pin changes from board to board, might change in the future
