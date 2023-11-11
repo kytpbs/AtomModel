@@ -137,31 +137,6 @@ void loop() {
   delay(DELAYTIME);
 }
 
-void blinkbuiltinled() {
-  builtinLedState = !builtinLedState;
-  digitalWrite(LED_BUILTIN, builtinLedState);
-}
-
-#ifdef ARDUINO_ARCH_ESP8266
-void cloudLoop() {
-  if (millis() - lastCloudUpdate >= 60000) { // If it has been 60 seconds since the last cloud update
-    Serial.println("Updating cloud...");
-    ArduinoCloud.update();
-    lastCloudUpdate = millis();
-  }
-}
-#endif
-
-#if defined(ARDUINO_ARCH_ESP32) // only include if we are on an ESP
-void cloudLoop(void *pvParameters) {
-  Serial.print("Cloud Loop currently running on core: ");
-  Serial.println(xPortGetCoreID());
-  for (;;) {
-    ArduinoCloud.update();
-  }
-}
-#endif
-
 void runSwitch() {
   Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
   lastSwitchTime = millis(); // Set the last switch time to the current time
@@ -207,6 +182,34 @@ void switchPixel() {
     outerStrip.increaseElectronAmount();
   }
 }
+
+#if !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ARCH_ESP32)
+void blinkbuiltinled() {
+  builtinLedState = !builtinLedState;
+  digitalWrite(LED_BUILTIN, builtinLedState);
+}
+#endif
+
+#ifdef ARDUINO_ARCH_ESP8266
+void cloudLoop() {
+  if (millis() - lastCloudUpdate >= 60000) { // If it has been 60 seconds since the last cloud update
+    Serial.println("Updating cloud...");
+    ArduinoCloud.update();
+    lastCloudUpdate = millis();
+  }
+}
+#endif
+
+#if defined(ARDUINO_ARCH_ESP32) // only include if we are on an ESP
+void cloudLoop(void *pvParameters) {
+  Serial.print("Cloud Loop currently running on core: ");
+  Serial.println(xPortGetCoreID());
+  for (;;) {
+    ArduinoCloud.update();
+  }
+}
+#endif
+
 
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 void onInnerStripColorChange() {
