@@ -50,3 +50,16 @@ jobs:
           libraries: |
             - name: "Adafruit NeoPixel"
             - name: "ArduinoIoTCloud"
+
+      - name: Compile ESPDUINO
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn:  "esp32:esp32:esp32doit-espduino"
+          platforms: |
+            - source-url: "https://raw.githubusercontent.com/esp8266/Arduino/master/package_esp8266com_index.json"
+              name: "esp32:esp32"
+          sketch-paths: |
+            - ./
+          libraries: |
+            - name: "Adafruit NeoPixel"
+            - name: "ArduinoIoTCloud"
