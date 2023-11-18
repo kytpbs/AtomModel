@@ -56,7 +56,7 @@ jobs:
         with:
           fqbn:  "esp32:esp32:esp32doit-espduino"
           platforms: |
-            - source-url: "https://raw.githubusercontent.com/esp8266/Arduino/master/package_esp8266com_index.json"
+            - source-url: "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
               name: "esp32:esp32"
           sketch-paths: |
             - ./
