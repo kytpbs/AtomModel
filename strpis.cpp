@@ -98,12 +98,22 @@ void NeoElectrons::updateBlink(int delay) {
         // If the blink has finished
         if (millis() - blinkStartTime >= delay) {
             blinkStartTime = millis();
-            clear();
-            show();
+            runBlink();
             blinkTimes--;
         }
-        else {
+    }
+}
+
+void NeoElectrons::runBlink() {
+    if (isBlinking()) {
+        if (blinkState) {
             flushColor(blinkColor);
         }
+        else {
+            clear();
+            show();
+        }
+        blinkState = !blinkState;
+        show();
     }
 }

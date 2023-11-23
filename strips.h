@@ -31,6 +31,7 @@ class NeoElectrons: public Adafruit_NeoPixel{
     private:
         unsigned long blinkStartTime = 0;
         unsigned int blinkTimes = 0;
+        bool blinkState = false;
     public:
         uint32_t electronColor;
         uint32_t backgroundColor;
@@ -107,6 +108,13 @@ class NeoElectrons: public Adafruit_NeoPixel{
         */
         void updateBlink() {updateBlink(blinkWaitTime);}
 
+        /**
+         * Actually runs the blink command,
+         * Will be called by the updateBlink function 
+         * so it is recoomended to use that instead
+        */
+        void runBlink();
+        
         /**
          * Uses the blinkTimes variable to check if it is currently blinking
          * @return If it is currently blinking, returns true, otherwise returns false
