@@ -1,4 +1,4 @@
-#include "strips.h"
+#include "strip.h"
 
 void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color) {
     strip->setPixelColor(index % strip->numPixels(), color);

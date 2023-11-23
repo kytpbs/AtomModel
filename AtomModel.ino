@@ -1,5 +1,5 @@
 #include "Constants.h"
-#include "strips.h"
+#include "strip.h"
 
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 #include "thingProperties.h"
