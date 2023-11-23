@@ -9,12 +9,12 @@
 unsigned long lastCloudUpdate = 0;
 #endif
 
-NeoElectrons smallStrip(SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
-NeoElectrons innerStrip(INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800); // Create the inner strip object
-NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800); // Create the second inner strip object
-NeoElectrons outerStrip(OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800); // Create the outer strip object
-NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800); // Create the second outer strip object
-NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800); // Create the third outer strip object
+NeoElectrons smallStrip (SMALLNUMPIXELS, SMALLDATA, NEO_GRB + NEO_KHZ800); // Create the small strip object
+NeoElectrons innerStrip (INNUMPIXELS, INDATA, NEO_GRB + NEO_KHZ800);       // Create the inner strip object
+NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800);      // Create the second inner strip object
+NeoElectrons outerStrip (OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800);     // Create the outer strip object
+NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800);    // Create the second outer strip object
+NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800);    // Create the third outer strip object
 
 unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
@@ -54,7 +54,7 @@ void setupStrips() {
 
   Serial.println("Setting up inner strip2...");
   innerStrip2.setup(BRIGHTNESS);
-  innerStrip2.setColors(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
+  innerStrip2.setColors(innerStrip2.Color(innerRED, innerGREEN, innerBLUE), innerStrip2.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
   innerStrip2.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
 
   // Setup outer strip
@@ -65,12 +65,12 @@ void setupStrips() {
 
   Serial.println("Setting up outer strip 2...");
   outerStrip2.setup(BRIGHTNESS);
-  outerStrip2.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
+  outerStrip2.setColors(outerStrip2.Color(outerRED, outerGREEN, outerBLUE), outerStrip2.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
   outerStrip2.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
   Serial.println("Setting up outer strip 3...");
   outerStrip3.setup(BRIGHTNESS);
-  outerStrip3.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
+  outerStrip3.setColors(outerStrip3.Color(outerRED, outerGREEN, outerBLUE), outerStrip3.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
   outerStrip3.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
   // Setup small strip
   Serial.println("Setting up small strip...");
@@ -105,16 +105,16 @@ void cloudSetup() {
   smallStripColor = Color(smallRED, smallGREEN, smallBLUE);
   // Multi-threading setup
   Serial.print("Setup currently running on core: ");
-  #ifdef ARDUINO_ARCH_ESP32
+#ifdef ARDUINO_ARCH_ESP32
   Serial.println(xPortGetCoreID());
   delay(500);
   xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, 2, NULL);
   delay(1000);
-  #elif defined(ARDUINO_ARCH_ESP8266)
+#elif defined(ARDUINO_ARCH_ESP8266)
   delay(500);
   // without using FreeRTOS, we can't do multi-threading, so we just run the cloud loop in the main loop, every minute or so
   Serial.println("Running cloud loop in main loop every minute");
-  #endif
+#endif
 }
 #endif
 

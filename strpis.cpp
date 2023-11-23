@@ -12,8 +12,8 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
 void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace) {
     strip->clear(); // Clear the strip
     strip->fill(backgroundColor, 0); // Set the background color
-    for (int i=0; i<numPixels; i++) {
-      setPixel(strip, i*pixelSpace + index, color);
+    for (int i = 0; i < numPixels; i++) {
+        setPixel(strip, i * pixelSpace + index, color);
     }
     strip->show();
 }
@@ -56,7 +56,7 @@ void NeoElectrons::setPixel(int index, uint32_t color) {
 }
 
 void NeoElectrons::flushColor(uint32_t color) {
-    fill(color, 0, numPixels());
+    fill(color);
     show();
 }
 
