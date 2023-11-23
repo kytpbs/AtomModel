@@ -247,7 +247,8 @@ void onLedCountsChange() {
   for(int i = 0; i < 6; i++) {
     try {
       counts[i] = tmpCounts.substring(i, i + 1).toInt();
-    } catch (const std::invalid_argument& ia) {
+    } catch { // Idk if there even is an error, so in case I just catch everything
+              // I don't want to crash the program because of a stupid error
       Serial.println("ERROR: ledCounts is not a number");
       return;
     }
