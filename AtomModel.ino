@@ -238,9 +238,19 @@ void onLedCountsChange() {
   tmpCounts.replace(" ", "");
   tmpCounts.replace(",", "");
   
+  if (tmpCounts.length() != 6) {
+    Serial.println("ERROR: ledCounts is not 6 digits long");
+    return;
+  }
+
   int counts[6];
   for(int i = 0; i < 6; i++) {
-    counts[i] = tmpCounts.substring(i, i + 1).toInt();
+    try {
+      counts[i] = tmpCounts.substring(i, i + 1).toInt();
+    } catch (const std::invalid_argument& ia) {
+      Serial.println("ERROR: ledCounts is not a number");
+      return;
+    }
   }
   
   smallStrip.setElectronAmont(counts[0]);
