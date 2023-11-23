@@ -183,6 +183,9 @@ void switchPixel() {
   }
 }
 
+
+
+/*   CLOUD FUNCTIONS   */
 #if !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ARCH_ESP32)
 void blinkbuiltinled() {
   builtinLedState = !builtinLedState;
@@ -204,7 +207,7 @@ void cloudLoop() {
 void cloudLoop(void *pvParameters) {
   Serial.print("Cloud Loop currently running on core: ");
   Serial.println(xPortGetCoreID());
-  for (;;) {
+  for (;;) { // infinite loop
     ArduinoCloud.update();
   }
 }
