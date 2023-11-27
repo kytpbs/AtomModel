@@ -134,7 +134,6 @@ void loop() {
 
   moveElectronFoward(); // Move The Electrons Foward
   updateBlinks(); // Run the updateBlink function for all the strips
-  delay(DELAYTIME);
 }
 
 void runSwitch() {
