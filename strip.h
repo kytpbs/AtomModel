@@ -100,7 +100,7 @@ class NeoElectrons: public Adafruit_NeoPixel{
          * Checks if it should be blinking and blinks if it should
          * Should be called in the loop function for the blink to work
         */
-        void updateBlink(int delay);
+        void updateBlink(unsigned int delay);
 
         /**
          * Checks if it should be blinking and blinks if it should

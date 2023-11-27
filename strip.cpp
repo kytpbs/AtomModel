@@ -73,10 +73,7 @@ int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, 
     moveColorFowardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
     
     // Increase the electron index
-    this->electronIndex++;
-    if (electronIndex >= numPixels()) {
-        electronIndex = 0;
-    }
+    this->electronIndex = (electronIndex + 1) % numPixels();
     return electronIndex;
 }
 
@@ -93,7 +90,7 @@ void NeoElectrons::setColors(uint32_t electronColor, uint32_t backgroundColor) {
     this->backgroundColor = backgroundColor;
 }
 
-void NeoElectrons::updateBlink(int delay) {
+void NeoElectrons::updateBlink(unsigned int delay) {
     if (isBlinking()) {
         // If the blink has finished
         if (millis() - blinkStartTime >= delay) {
