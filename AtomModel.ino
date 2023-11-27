@@ -241,22 +241,21 @@ void onSmallStripColorChange() {
 void onLedCountsChange() {
   String tmpCounts = ledCounts;
   tmpCounts.replace(" ", "");
-  tmpCounts.replace(",", "");
-  
-  if (tmpCounts.length() != 6) {
-    Serial.println("ERROR: ledCounts is not 6 digits long");
-    return;
-  }
 
   int counts[6];
   for(int i = 0; i < 6; i++) {
-    try {
-      counts[i] = tmpCounts.substring(i, i + 1).toInt();
-    } catch { // Idk if there even is an error, so in case I just catch everything
-              // I don't want to crash the program because of a stupid error
-      Serial.println("ERROR: ledCounts is not a number");
-      return;
+    int index = tmpCounts.indexOf(",");
+    if (index == -1) {
+      if (i == 5) {
+        index = tmpCounts.length();
+      }
+      else {
+        Serial.println("Error parsing led counts, not enough commas");
+        return;
+      }
     }
+    counts[i] = tmpCounts.substring(0, index).toInt();
+    tmpCounts = tmpCounts.substring(index + 1);
   }
 
   Serial.println("Changing led counts to " + String(counts[0]) + ", " + String(counts[1]) + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
