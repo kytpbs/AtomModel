@@ -209,6 +209,8 @@ void cloudLoop(void *pvParameters) {
   Serial.println(xPortGetCoreID());
   for (;;) { // infinite loop
     ArduinoCloud.update();
+    // The delay function already calls yield() so we don't need to do it ourselves
+    delay(1000); // wait a second, so we don't use too much CPU waiting for the cloud to update. *might increase in the future
   }
 }
 #endif
