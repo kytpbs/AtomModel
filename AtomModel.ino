@@ -100,9 +100,9 @@ void cloudSetup() {
   ArduinoCloud.printDebugInfo();
 
   // Set the colors of the strips
-  innerStripColor = Color(innerRED, innerGREEN, innerBLUE);
-  outerStripColor = Color(outerRED, outerGREEN, outerBLUE);
-  smallStripColor = Color(smallRED, smallGREEN, smallBLUE);
+  innerStripColor.getCloudValue().setColorRGB(innerRED, innerGREEN, innerBLUE);
+  outerStripColor.getCloudValue().setColorRGB(outerRED, outerGREEN, outerBLUE);
+  smallStripColor.getCloudValue().setColorRGB(smallRED, smallGREEN, smallBLUE);
   // Multi-threading setup
   Serial.print("Setup currently running on core: ");
 #ifdef ARDUINO_ARCH_ESP32
