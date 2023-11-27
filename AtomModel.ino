@@ -269,10 +269,27 @@ void onLedCountsChange() {
   outerStrip3.setElectronAmont(counts[5]);
 }
 
-void onTriggerSwitchChange() {
-  if (triggerSwitch) {
-    Serial.println("Triggering switch");
+void onCloudSerialChange() { // Will only give the newest message, NICE!
+  Serial.println("New cloudSerial Command: " + cloudSerial);
+
+  if (cloudSerial.equalsIgnoreCase("ping")) {
+    cloudSerial = "Pong!";
+  }
+
+  if (cloudSerial.equalsIgnoreCase("switch")) {
     runSwitch();
+    cloudSerial = "Switched!";
+  }
+
+  if (cloudSerial.equalsIgnoreCase("blink")) {
+    blinkAll(BLINKAMOUNT);
+    cloudSerial = "Blinked!";
+  }
+
+  if (cloudSerial.startsWith("blink ")) {
+    int times = cloudSerial.substring(6).toInt();
+    blinkAll(times);
+    cloudSerial = "Blinked " + String(times) + " times!";
   }
 }
 #endif
