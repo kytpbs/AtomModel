@@ -271,6 +271,9 @@ void onLedCountsChange() {
 }
 
 void onTriggerSwitchChange() {
-  runSwitch();
+  if (triggerSwitch) {
+    Serial.println("Triggering switch");
+    runSwitch();
+  }
 }
 #endif
