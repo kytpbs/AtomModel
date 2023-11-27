@@ -217,12 +217,14 @@ void cloudLoop(void *pvParameters) {
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 void onInnerStripColorChange() {
   Color color = innerStripColor.getValue();
+  Serial.println("Changing inner strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
   innerStrip.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
   innerStrip2.setElectronColor(innerStrip2.ColorHSV(color.hue, color.sat, color.bri));
 }
 
 void onOuterStripColorChange() {
   Color color = outerStripColor.getValue();
+  Serial.println("Changing outer strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
   outerStrip.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
   outerStrip2.setElectronColor(outerStrip2.ColorHSV(color.hue, color.sat, color.bri));
   outerStrip3.setElectronColor(outerStrip3.ColorHSV(color.hue, color.sat, color.bri));
@@ -230,6 +232,7 @@ void onOuterStripColorChange() {
 
 void onSmallStripColorChange() {
   Color color = smallStripColor.getValue();
+  Serial.println("Changing small strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
   smallStrip.setElectronColor(smallStrip.ColorHSV(color.hue, color.sat, color.bri));
 }
 
@@ -253,6 +256,8 @@ void onLedCountsChange() {
       return;
     }
   }
+
+  Serial.println("Changing led counts to " + String(counts[0]) + ", " + String(counts[1]) + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
   
   smallStrip.setElectronAmont(counts[0]);
 
