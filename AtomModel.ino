@@ -3,6 +3,9 @@
 
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 #include "thingProperties.h"
+#include "serialCommandsSystem.h"
+#include "commands.h"
+CloudSerialSystem cloudCLI(&cloudSerial); // Create the cloud serial system object that will handle the cloud serial commands
 #endif
 
 #ifdef ARDUINO_ARCH_ESP8266
@@ -272,10 +275,9 @@ void onLedCountsChange() {
 void onCloudSerialChange() { // Will only give the newest message, NICE!
   Serial.println("New cloudSerial Command: " + cloudSerial);
 
-  if (cloudSerial.equalsIgnoreCase("ping")) {
-    cloudSerial = "Pong!";
-  }
-
+  cloudCLI.checkForCommands();
+  setupCommands(&cloudCLI);
+  
   if (cloudSerial.equalsIgnoreCase("switch")) {
     runSwitch();
     cloudSerial = "Switched!";
