@@ -1,8 +1,9 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 #include "serialCommandsSystem.h"
+#include <vector>
 
-void ping(CloudSerialSystem* cloudSerialSystem) {
+void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
     cloudSerialSystem->print("pong");
 }
 

@@ -9,15 +9,15 @@
 
 #include <Arduino.h>
 #include <map>
-// #include <WString.h>
+#include <vector>
 
 class CloudSerialSystem {
     private:
         String* cloudSerialObject;
-        std::map<String, void (*)(CloudSerialSystem*)> commandsList;
+        std::map<String, void (*)(CloudSerialSystem*, std::vector<String>* /*Argv*/)> commandsList;
     public:
     CloudSerialSystem(String* cloudSerialObject);
-    void addCommand(String command, void (*function)(CloudSerialSystem*));
+    void addCommand(String commandName, void (*function)(CloudSerialSystem*, std::vector<String>*));
     void checkForCommands(String command);
     void checkForCommands() { this->checkForCommands(*this->cloudSerialObject); };
     void print(String message);
