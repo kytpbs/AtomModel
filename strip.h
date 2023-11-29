@@ -21,6 +21,17 @@ void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color);
 void flushColor(Adafruit_NeoPixel *strip, uint32_t color);
 
 /**
+ * Creates a color that is a mix of the two given colors with the given mix level.
+ * You will probably use this to mix the background color with the color of the electron.
+ * To do so, use color1 as the electron color, color2 as the background color, and the mix level as the level of brightness of the electron.
+ * @param COLOR1: The first color to mix
+ * @param COLOR2: The second color to mix
+ * @param MIXLEVEL: The level to mix the colors at, 1.0 is all color1, 0.0 is all color2
+ * @return The mixed color
+*/
+uint32_t mixColors(uint32_t Color1, uint32_t Color2, float mixLevel);
+
+/**
  * Moves the red color pixel by pixel from the back to the front removing the red color from the back
  * @param INDEX: The index of the pixel to light up
  * @param NUMPIXELS: The number of pixels in the strip will be used to wrap around the index, will leave an empty between them (might change later, should I?)

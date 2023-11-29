@@ -9,6 +9,19 @@ void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
     strip->show();
 }
 
+uint32_t mixColors(uint32_t Color1, uint32_t Color2, float mixLevel) {
+    uint8_t r1 = (Color1 >> 16) & 0xFF;
+    uint8_t g1 = (Color1 >> 8) & 0xFF;
+    uint8_t b1 = Color1 & 0xFF;
+    uint8_t r2 = (Color2 >> 16) & 0xFF;
+    uint8_t g2 = (Color2 >> 8) & 0xFF;
+    uint8_t b2 = Color2 & 0xFF;
+    uint8_t r = (uint8_t)(r1 * mixLevel + r2 * (1 - mixLevel));
+    uint8_t g = (uint8_t)(g1 * mixLevel + g2 * (1 - mixLevel));
+    uint8_t b = (uint8_t)(b1 * mixLevel + b2 * (1 - mixLevel));
+    return Adafruit_NeoPixel::Color(r, g, b);
+}
+
 void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace) {
     strip->clear(); // Clear the strip
     strip->fill(backgroundColor, 0); // Set the background color
