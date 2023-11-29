@@ -25,8 +25,11 @@ uint32_t mixColors(uint32_t Color1, uint32_t Color2, float mixLevel) {
 void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace) {
     strip->clear(); // Clear the strip
     strip->fill(backgroundColor, 0); // Set the background color
+    // mix background color with color
     for (int i = 0; i < numPixels; i++) {
         setPixel(strip, i * pixelSpace + index, color);
+        setPixel(strip, i * pixelSpace + index - 1, mixColors(color, backgroundColor, 0.6));
+        setPixel(strip, i * pixelSpace + index - 2, mixColors(color, backgroundColor, 0.3));
     }
     strip->show();
 }
