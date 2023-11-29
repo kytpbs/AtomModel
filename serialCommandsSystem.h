@@ -11,6 +11,8 @@
 #include <map>
 #include <vector>
 
+#include "stringTools.h"
+
 class CloudSerialSystem {
     private:
         String* cloudSerialObject;

@@ -12,26 +12,6 @@ void CloudSerialSystem::print(String message) {
     this->cloudSerialObject->operator= (message);
 }
 
-void splitString(String string, std::vector<String>* argv) {
-    int spaceIndex = string.indexOf(" ");
-    
-    if (spaceIndex == -1) {
-        spaceIndex = string.length();
-    }
-
-    String commandName = string.substring(0, spaceIndex);
-    argv->push_back(commandName);
-    String args = string.substring(spaceIndex + 1);
-    int lastSpaceIndex = 0;
-    
-    while (args.indexOf(" ") != -1) {
-        spaceIndex = args.indexOf(" ");
-        argv->push_back(args.substring(lastSpaceIndex, spaceIndex));
-        args = args.substring(spaceIndex + 1);
-    }
-    argv->push_back(args);
-}
-
 void CloudSerialSystem::checkForCommands(String command) {
     int spaceIndex = command.indexOf(" ");
     bool hasArgs = spaceIndex != -1;
