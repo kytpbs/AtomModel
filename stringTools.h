@@ -29,6 +29,22 @@ std::vector<String> splitStringtoVec(String string);
  * @param separator The string to put between each string.
  * @return The joined string.
 */
-String joinString(std::vector<String>* argv, String separator = " ");
+String joinString(std::vector<String>* argv, String separator);
+
+/**
+ * Joins a vector of strings into one string.
+ * @param argv The vector of strings to join.
+ * @param separator The char to put between each string.
+ * @return The joined string.
+*/
+String joinString(std::vector<String>* argv, char separator);
+
+/**
+ * Joins a vector of strings into one string.
+ * @param argv The vector of strings to join.
+ * @return The joined string.
+ * @note Uses a space as the separator.
+*/
+String joinString(std::vector<String>* argv);
 
 #endif
