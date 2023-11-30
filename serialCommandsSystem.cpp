@@ -24,7 +24,7 @@ void CloudSerialSystem::checkForCommands(String command) {
     if (this->commandsList.find(commandName) != this->commandsList.end()) {
         std::vector<String> argv = std::vector<String>();
         if (hasArgs) {splitString(command.substring(spaceIndex), &argv);} // Split the string into arguments, if it has any
-        this->commandsList[command](this, &argv);
+        this->commandsList[commandName](this, &argv);
     }
     else {
         this->print("Command not found");
