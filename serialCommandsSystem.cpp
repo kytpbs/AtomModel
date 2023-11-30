@@ -1,4 +1,5 @@
 #include "serialCommandsSystem.h"
+#include <vector>
 
 CloudSerialSystem::CloudSerialSystem(String* cloudSerialObject) {
     this->cloudSerialObject = cloudSerialObject;
@@ -31,6 +32,7 @@ void CloudSerialSystem::checkForCommands(String command) {
         }
         Serial.println("Running command");
         this->commandsList[commandName](this, &argv);
+        Serial.println("Command complete");
     }
     else {
         this->print("Command not found");
