@@ -111,7 +111,7 @@ void cloudSetup() {
 #ifdef ARDUINO_ARCH_ESP32
   Serial.println(xPortGetCoreID());
   delay(500);
-  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, 2, NULL);
+  xTaskCreate(cloudLoop, "CloudLoop", 20000, NULL, 2, NULL);
   delay(1000);
 #elif defined(ARDUINO_ARCH_ESP8266)
   delay(500);
