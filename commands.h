@@ -4,21 +4,10 @@
 #include "stringTools.h"
 #include <vector>
 
-void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
-    cloudSerialSystem->print("pong");
-}
+void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
-void echo(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
-    if (argv->size() == 0) {
-        cloudSerialSystem->print("No arguments provided!");
-        return;
-    }
-    cloudSerialSystem->print(joinString(argv));
-}
+void echo(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
-void setupCommands(CloudSerialSystem* cloudSerialSystem) {
-    cloudSerialSystem->addCommand("ping", ping);
-    cloudSerialSystem->addCommand("echo", echo);
-}
+void setupCommands(CloudSerialSystem* cloudSerialSystem);
 
 #endif
