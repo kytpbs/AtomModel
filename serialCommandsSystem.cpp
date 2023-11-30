@@ -22,8 +22,14 @@ void CloudSerialSystem::checkForCommands(String command) {
 
     String commandName = command.substring(0, spaceIndex);
     if (this->commandsList.find(commandName) != this->commandsList.end()) {
-        std::vector<String> argv = std::vector<String>();
-        if (hasArgs) {splitString(command.substring(spaceIndex), &argv);} // Split the string into arguments, if it has any
+        std::vector<String> argv;
+        if (hasArgs) { // Split the string into arguments, if it has any
+            Serial.println("Splitting string");
+            splitString(command.substring(spaceIndex), &argv);
+            Serial.print("Split Complete");
+            delay(100);
+        }
+        Serial.println("Running command");
         this->commandsList[commandName](this, &argv);
     }
     else {
