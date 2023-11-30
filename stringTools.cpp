@@ -8,15 +8,22 @@ void splitString(String string, std::vector<String>* argv) {
         return; // If there are no spaces, there are no arguments so we can return
     }
 
-    String args = string.substring(spaceIndex + 1); // Removing the command name from the string
-    int lastSpaceIndex = 0;
+    String args = string.substring(spaceIndex + 1); // Removing the command name from the string, +1 to remove the space as well
     
-    while (args.indexOf(" ") != -1) {
-        spaceIndex = args.indexOf(" ");
-        argv->push_back(args.substring(spaceIndex));
-        args = args.substring(spaceIndex + 1);
-        lastSpaceIndex = spaceIndex + 1;
+    while ((spaceIndex = args.indexOf(" ")) != -1) {
+        Serial.println("Space index: " + String(spaceIndex));
+        if (spaceIndex >= args.length()) {
+            Serial.println("ERROR: Space index out of bounds! Args: " + args + " Space index: " + String(spaceIndex) + " Length: " + String(args.length()));
+            return;
+        }
+        argv->push_back(args.substring(0, spaceIndex));
+        if (spaceIndex + 1 >= args.length()) {
+            Serial.println("ERROR: Substring out of bounds! Args: " + args + " Space index: " + String(spaceIndex) + " Length: " + String(args.length()));
+            return;
+        }
+        args = args.substring(spaceIndex + 1); // +1 to remove the space as well.
     }
+    Serial.println("Args: " + args);
     argv->push_back(args);
 }
 
@@ -27,12 +34,26 @@ std::vector<String> splitStringtoVec(String string) {
 }
 
 String joinString(std::vector<String>* argv, String separator) {
+    // return String("Not implemented yet!");
     String string = "";
     for (int i = 0; i < argv->size(); i++) {
-        string += argv->at(i);
+        try {
+            string = string + argv->at(i);
+        } catch (std::out_of_range e) {
+            Serial.println("ERROR: Out of range! i: " + String(i) + " Size: " + String(argv->size()));
+            return string;
+        }
         if (i != argv->size() - 1) {
             string += separator;
         }
     }
     return string;
+}
+
+String joinString(std::vector<String>* argv, char separator) {
+    return joinString(argv, String(separator));
+}
+
+String joinString(std::vector<String>* argv) {
+    return joinString(argv, " ");
 }
