@@ -260,7 +260,8 @@ void onLedCountsChange() {
     tmpCounts = tmpCounts.substring(index + 1);
   }
 
-  Serial.println("Changing led counts to " + String(counts[0]) + ", " + String(counts[1]) + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
+  Serial.println("Changing led counts to " + String(counts[0]) + ", " + String(counts[1])
+   + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
   
   smallStrip.setElectronAmont(counts[0]);
 
@@ -274,8 +275,12 @@ void onLedCountsChange() {
 
 void onCloudSerialChange() { // Will only give the newest message, NICE!
   Serial.println("New cloudSerial Command: " + cloudSerial);
+  String tmpSerial = cloudSerial;
+  if (tmpSerial.isEmpty()) {
+    return;
+  }
 
-  cloudCLI.checkForCommands();
+  cloudCLI.checkForCommands(tmpSerial);
   setupCommands(&cloudCLI);
   
   if (cloudSerial.equalsIgnoreCase("switch")) {
