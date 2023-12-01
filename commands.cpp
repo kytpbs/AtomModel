@@ -31,10 +31,29 @@ void blinkStrips(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv
     cloudSerialSystem->print("Blinking " + String(blinkAmount) + " times.");
 }
 
+void setDebugMode(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
+    if (argv->size() == 0) {
+        cloudSerialSystem->print("No arguments provided! Current debug mode: " + String(cloudSerialSystem->getDebug() ? "true" : "false"));
+        return;
+    }
+    if (argv->at(0) == "true") {
+        cloudSerialSystem->setDebug(true);
+        cloudSerialSystem->print("Debug mode set to true");
+        return;
+    }
+    if (argv->at(0) == "false") {
+        cloudSerialSystem->setDebug(false);
+        cloudSerialSystem->print("Debug mode set to false");
+        return;
+    }
+    cloudSerialSystem->print("Invalid argument! Not changing debug mode. Current debug mode: " + String(cloudSerialSystem->getDebug() ? "true" : "false"));
+}
+
 void setupCommands(CloudSerialSystem* cloudSerialSystem) {
     cloudSerialSystem->addCommand("ping", ping);
     cloudSerialSystem->addCommand("echo", echo);
     cloudSerialSystem->addCommand("switch", switchElectronOnStrips);
     cloudSerialSystem->addCommand("blink", blinkStrips);
+    cloudSerialSystem->addCommand("debug", setDebugMode);
 }
 #endif

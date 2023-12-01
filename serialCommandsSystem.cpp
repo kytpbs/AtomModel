@@ -41,7 +41,17 @@ void CloudSerialSystem::checkForCommands(String command) {
 }
 
 void CloudSerialSystem::debugPrint(String message) {
-    this->print("DEBUG - " + message);
-    Serial.println("DEBUG - " + message);
+    if (this->debug) {
+        this->print("DEBUG - " + message); // only print to cloudSerial if debug is enabled
+    }
+    Serial.println("DEBUG - " + message); // Always print to serial
 }
+
+void CloudSerialSystem::setDebug(bool debug) {
+    this->debug = debug;
+}
+
+bool CloudSerialSystem::getDebug() {
+    return this->debug;
+} 
 #endif

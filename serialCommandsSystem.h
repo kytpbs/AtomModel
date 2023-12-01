@@ -16,6 +16,7 @@ class CloudSerialSystem {
     private:
         String* cloudSerialObject;
         std::map<String, void (*)(CloudSerialSystem*, std::vector<String>* /*Argv*/)> commandsList;
+        bool debug = true;
     public:
     CloudSerialSystem(String* cloudSerialObject);
     void addCommand(String commandName, void (*function)(CloudSerialSystem*, std::vector<String>*));
@@ -23,5 +24,7 @@ class CloudSerialSystem {
     void checkForCommands() { this->checkForCommands(*this->cloudSerialObject); };
     void print(String message);
     void debugPrint(String message);
+    bool getDebug();
+    void setDebug(bool debug);
 };
 #endif
