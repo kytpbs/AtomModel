@@ -1,8 +1,16 @@
 #include "Constants.h"
-#include "strip.h"
+#include "stripVariables.h"
+#include "stripCommands.h"
 
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 #include "thingProperties.h"
+#include "serialCommandsSystem.h"
+#include "commands.h"
+CloudSerialSystem cloudCLI(&cloudSerial); // Create the cloud serial system object that will handle the cloud serial commands
+#define debugPrint(...) cloudCLI.debugPrint(__VA_ARGS__)
+#define debugPrintln(...) debugPrint(__VA_ARGS__)
+#else
+#define debugPrintln(x) Serial.println(x)
 #endif
 
 #ifdef ARDUINO_ARCH_ESP8266
@@ -15,8 +23,6 @@ NeoElectrons innerStrip2(INNUMPIXELS, INDATA2, NEO_GRB + NEO_KHZ800);      // Cr
 NeoElectrons outerStrip (OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800);     // Create the outer strip object
 NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800);    // Create the second outer strip object
 NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800);    // Create the third outer strip object
-
-unsigned long lastSwitchTime = 0; // The last time the pixels switched
 
 bool builtinLedState = false; // The state of the builtin led
 
@@ -103,12 +109,16 @@ void cloudSetup() {
   innerStripColor.getCloudValue().setColorRGB(innerRED, innerGREEN, innerBLUE);
   outerStripColor.getCloudValue().setColorRGB(outerRED, outerGREEN, outerBLUE);
   smallStripColor.getCloudValue().setColorRGB(smallRED, smallGREEN, smallBLUE);
+
+  // setup all CLI commands
+  setupCommands(&cloudCLI);
+
   // Multi-threading setup
   Serial.print("Setup currently running on core: ");
 #ifdef ARDUINO_ARCH_ESP32
   Serial.println(xPortGetCoreID());
   delay(500);
-  xTaskCreate(cloudLoop, "CloudLoop", 10000, NULL, 2, NULL);
+  xTaskCreate(cloudLoop, "CloudLoop", 20000, NULL, 2, NULL);
   delay(1000);
 #elif defined(ARDUINO_ARCH_ESP8266)
   delay(500);
@@ -121,8 +131,8 @@ void cloudSetup() {
 /* DONE SETUP */
 
 void loop() {
-  if (millis() - lastSwitchTime >= SWITCHTIME * 1000) { // If it has been SWITCHTIME seconds since the last switch
-    runSwitch(); // Run the switch
+  if (stripCommands::shouldSwitch()) { // If it has been SWITCHTIME seconds since the last switch
+    stripCommands::runSwitch(); // Run the switch
   }
 #ifdef ARDUINO_ARCH_ESP8266
   cloudLoop();
@@ -132,57 +142,9 @@ void loop() {
   blinkbuiltinled(); // Blink the builtin led to show that the program is running, but not on an ESP as the pin changes from board to board, might change in the future
 #endif
 
-  moveElectronFoward(); // Move The Electrons Foward
-  updateBlinks(); // Run the updateBlink function for all the strips
+  stripCommands::moveElectronFoward(); // Move The Electrons Foward
+  stripCommands::updateBlinks(); // Run the updateBlink function for all the strips
 }
-
-void runSwitch() {
-  Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
-  lastSwitchTime = millis(); // Set the last switch time to the current time
-  blinkAll(BLINKAMOUNT); // Blink the pixels
-  switchPixel(); // Switch the pixels
-  return;
-}
-
-/**
- * Moves the red color by one pixel from the back to the front removing the red color from the back
-*/
-void moveElectronFoward() {
-  // Move the electrons foward
-  innerStrip.moveColorFowardOnce();
-  innerStrip2.moveColorFowardOnce();
-  outerStrip.moveColorFowardOnce();
-  outerStrip2.moveColorFowardOnce();
-  outerStrip3.moveColorFowardOnce();
-  smallStrip.moveColorFowardOnce();
-}
-
-void updateBlinks() {
-  innerStrip.updateBlink();
-  innerStrip2.updateBlink();
-  outerStrip.updateBlink();
-  outerStrip2.updateBlink();
-  outerStrip3.updateBlink();
-  smallStrip.updateBlink();
-}
-
-void blinkAll(int times) {
-  innerStrip.startBlink(times);
-  outerStrip.startBlink(times);
-}
-
-void switchPixel() {
-  if (innerStrip.electronAmount <= outerStrip.electronAmount) {
-    innerStrip.increaseElectronAmount();
-    outerStrip.decreaseElectronAmount();
-  }
-  else {
-    innerStrip.decreaseElectronAmount();
-    outerStrip.increaseElectronAmount();
-  }
-}
-
-
 
 /*   CLOUD FUNCTIONS   */
 #if !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ARCH_ESP32)
@@ -218,14 +180,14 @@ void cloudLoop(void *pvParameters) {
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
 void onInnerStripColorChange() {
   Color color = innerStripColor.getValue();
-  Serial.println("Changing inner strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
+  debugPrintln("Changing inner strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
   innerStrip.setElectronColor(innerStrip.ColorHSV(color.hue, color.sat, color.bri));
   innerStrip2.setElectronColor(innerStrip2.ColorHSV(color.hue, color.sat, color.bri));
 }
 
 void onOuterStripColorChange() {
   Color color = outerStripColor.getValue();
-  Serial.println("Changing outer strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
+  debugPrintln("Changing outer strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
   outerStrip.setElectronColor(outerStrip.ColorHSV(color.hue, color.sat, color.bri));
   outerStrip2.setElectronColor(outerStrip2.ColorHSV(color.hue, color.sat, color.bri));
   outerStrip3.setElectronColor(outerStrip3.ColorHSV(color.hue, color.sat, color.bri));
@@ -233,7 +195,7 @@ void onOuterStripColorChange() {
 
 void onSmallStripColorChange() {
   Color color = smallStripColor.getValue();
-  Serial.println("Changing small strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
+  debugPrintln("Changing small strip color to " + String(color.hue) + ", " + String(color.sat) + ", " + String(color.bri));
   smallStrip.setElectronColor(smallStrip.ColorHSV(color.hue, color.sat, color.bri));
 }
 
@@ -249,7 +211,7 @@ void onLedCountsChange() {
         index = tmpCounts.length();
       }
       else {
-        Serial.println("Error parsing led counts, not enough commas");
+        debugPrintln("Error parsing led counts, not enough commas");
         return;
       }
     }
@@ -257,7 +219,8 @@ void onLedCountsChange() {
     tmpCounts = tmpCounts.substring(index + 1);
   }
 
-  Serial.println("Changing led counts to " + String(counts[0]) + ", " + String(counts[1]) + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
+  debugPrintln("Changing led counts to " + String(counts[0]) + ", " + String(counts[1])
+   + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
   
   smallStrip.setElectronAmont(counts[0]);
 
@@ -269,10 +232,14 @@ void onLedCountsChange() {
   outerStrip3.setElectronAmont(counts[5]);
 }
 
-void onTriggerSwitchChange() {
-  if (triggerSwitch) {
-    Serial.println("Triggering switch");
-    runSwitch();
+void onCloudSerialChange() { // Will only give the newest message, NICE!
+  Serial.println("New cloudSerial Command: " + cloudSerial);
+  String tmpSerial = cloudSerial;
+  
+  if (tmpSerial.isEmpty() || tmpSerial == "" || tmpSerial == " ") {
+    return;
   }
+
+  cloudCLI.checkForCommands(tmpSerial);
 }
 #endif
