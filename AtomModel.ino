@@ -29,7 +29,7 @@ bool builtinLedState = false; // The state of the builtin led
 
 void setup() {
   Serial.begin(115200); // Start the serial connection
-  while (!Serial) { // Wait for the serial connection to be establised.
+  while (!Serial) { // Wait for the serial connection to be established.
     if (millis() > 3000) {
       break; // If we don't get a serial connection in 3 seconds, stop waiting.
     }
@@ -103,16 +103,16 @@ void loop() {
 #elif defined(ARDUINO_ARCH_ESP32)
   // nothing to do here, cloud loop is running on a separate thread
 #else
-  blinkbuiltinled(); // Blink the builtin led to show that the program is running, but not on an ESP as the pin changes from board to board, might change in the future
+  blinkBuiltInLed(); // Blink the builtin led to show that the program is running, but not on an ESP as the pin changes from board to board, might change in the future
 #endif
 
-  stripCommands::moveElectronForward(); // Move The Electrons Foward
+  stripCommands::moveElectronForward(); // Move The Electrons Forward
   stripCommands::updateBlinks(); // Run the updateBlink function for all the strips
 }
 
 /*   CLOUD FUNCTIONS   */
 #if !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ARCH_ESP32)
-void blinkbuiltinled() {
+void blinkBuiltInLed() {
   builtinLedState = !builtinLedState;
   digitalWrite(LED_BUILTIN, builtinLedState);
 }
@@ -186,14 +186,14 @@ void onLedCountsChange() {
   debugPrintln("Changing led counts to " + String(counts[0]) + ", " + String(counts[1])
    + ", " + String(counts[2]) + ", " + String(counts[3]) + ", " + String(counts[4]) + ", " + String(counts[5]));
   
-  smallStrip.setElectronAmont(counts[0]);
+  smallStrip.setElectronAmount(counts[0]);
 
-  innerStrip.setElectronAmont(counts[1]);
-  innerStrip2.setElectronAmont(counts[2]);
+  innerStrip.setElectronAmount(counts[1]);
+  innerStrip2.setElectronAmount(counts[2]);
   
-  outerStrip.setElectronAmont(counts[3]);
-  outerStrip2.setElectronAmont(counts[4]);
-  outerStrip3.setElectronAmont(counts[5]);
+  outerStrip.setElectronAmount(counts[3]);
+  outerStrip2.setElectronAmount(counts[4]);
+  outerStrip3.setElectronAmount(counts[5]);
 }
 
 void onCloudSerialChange() { // Will only give the newest message, NICE!

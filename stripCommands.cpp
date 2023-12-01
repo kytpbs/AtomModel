@@ -8,33 +8,33 @@ namespace stripCommands {
         Serial.println("Setting up inner strip1...");
         innerStrip.setup(BRIGHTNESS); // This initializes the strip
         innerStrip.setColors(innerStrip.Color(innerRED, innerGREEN, innerBLUE), innerStrip.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
-        innerStrip.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
+        innerStrip.setElectronAmount(INPIXELAMOUNT); // Set the amount of electrons in the strip
 
         Serial.println("Setting up inner strip2...");
         innerStrip2.setup(BRIGHTNESS);
         innerStrip2.setColors(innerStrip2.Color(innerRED, innerGREEN, innerBLUE), innerStrip2.Color(innerBACKGROUNDRED, innerBACKGROUNDGREEN, innerBACKGROUNDBLUE)); // Set the colors of the strip
-        innerStrip2.setElectronAmont(INPIXELAMOUNT); // Set the amount of electrons in the strip
+        innerStrip2.setElectronAmount(INPIXELAMOUNT); // Set the amount of electrons in the strip
 
         // Setup outer strip
         Serial.println("Setting up outer strip 1...");
         outerStrip.setup(BRIGHTNESS); // This initializes the strip
         outerStrip.setColors(outerStrip.Color(outerRED, outerGREEN, outerBLUE), outerStrip.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
-        outerStrip.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
+        outerStrip.setElectronAmount(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
         Serial.println("Setting up outer strip 2...");
         outerStrip2.setup(BRIGHTNESS);
         outerStrip2.setColors(outerStrip2.Color(outerRED, outerGREEN, outerBLUE), outerStrip2.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
-        outerStrip2.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
+        outerStrip2.setElectronAmount(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
 
         Serial.println("Setting up outer strip 3...");
         outerStrip3.setup(BRIGHTNESS);
         outerStrip3.setColors(outerStrip3.Color(outerRED, outerGREEN, outerBLUE), outerStrip3.Color(outerBACKGROUNDRED, outerBACKGROUNDGREEN, outerBACKGROUNDBLUE)); // Set the colors of the strip
-        outerStrip3.setElectronAmont(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
+        outerStrip3.setElectronAmount(OUTPIXELAMOUNT); // Set the amount of electrons in the strip
         // Setup small strip
         Serial.println("Setting up small strip...");
         smallStrip.setup(BRIGHTNESS); // This initializes the strip
         smallStrip.setColors(smallStrip.Color(smallRED, smallGREEN, smallBLUE), smallStrip.Color(smallBACKGROUNDRED, smallBACKGROUNDGREEN, smallBACKGROUNDBLUE)); // Set the colors of the strip
-        smallStrip.setElectronAmont(SMALLPIXELAMOUNT); // Set the amount of electrons in the strip
+        smallStrip.setElectronAmount(SMALLPIXELAMOUNT); // Set the amount of electrons in the strip
         Serial.println("Done setting up strips!");
     }
 
@@ -48,12 +48,12 @@ namespace stripCommands {
     }
 
     void moveElectronForward() {
-        innerStrip.moveColorFowardOnce();
-        innerStrip2.moveColorFowardOnce();
-        outerStrip.moveColorFowardOnce();
-        outerStrip2.moveColorFowardOnce();
-        outerStrip3.moveColorFowardOnce();
-        smallStrip.moveColorFowardOnce();
+        innerStrip.moveColorForwardOnce();
+        innerStrip2.moveColorForwardOnce();
+        outerStrip.moveColorForwardOnce();
+        outerStrip2.moveColorForwardOnce();
+        outerStrip3.moveColorForwardOnce();
+        smallStrip.moveColorForwardOnce();
     }
 
     void updateBlinks() {

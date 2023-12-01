@@ -22,7 +22,7 @@ uint32_t mixColors(uint32_t Color1, uint32_t Color2, float mixLevel) {
     return Adafruit_NeoPixel::Color(r, g, b);
 }
 
-void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace) {
+void moveColorForwardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace) {
     strip->clear(); // Clear the strip
     strip->fill(backgroundColor, 0); // Set the background color
     // mix background color with color
@@ -76,7 +76,7 @@ void NeoElectrons::flushColor(uint32_t color) {
     show();
 }
 
-int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int activePixelAmount) {
+int NeoElectrons::moveColorForwardOnce(uint32_t color, uint32_t backgroundColor, int activePixelAmount) {
     if (isBlinking()) {
         return electronIndex; // If the strip is blinking, don't move the electrons
     }
@@ -85,20 +85,20 @@ int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, 
         pixelSpace = numPixels() / activePixelAmount;
     }
 
-    // Move the electrons foward
-    moveColorFowardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
+    // Move the electrons forward
+    moveColorForwardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
     
     // Increase the electron index
     this->electronIndex = (electronIndex + 1) % numPixels();
     return electronIndex;
 }
 
-int NeoElectrons::moveColorFowardOnce(uint32_t color, uint32_t backgroundColor) {
-    return moveColorFowardOnce(color, backgroundColor, electronAmount);
+int NeoElectrons::moveColorForwardOnce(uint32_t color, uint32_t backgroundColor) {
+    return moveColorForwardOnce(color, backgroundColor, electronAmount);
 }
 
-int NeoElectrons::moveColorFowardOnce() {
-    return moveColorFowardOnce(electronColor, backgroundColor);
+int NeoElectrons::moveColorForwardOnce() {
+    return moveColorForwardOnce(electronColor, backgroundColor);
 }
 
 void NeoElectrons::setColors(uint32_t electronColor, uint32_t backgroundColor) {

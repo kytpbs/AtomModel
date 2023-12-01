@@ -36,7 +36,7 @@ uint32_t mixColors(uint32_t Color1, uint32_t Color2, float mixLevel);
  * @param INDEX: The index of the pixel to light up
  * @param NUMPIXELS: The number of pixels in the strip will be used to wrap around the index, will leave an empty between them (might change later, should I?)
 */
-void moveColorFowardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace);
+void moveColorForwardOnceLib(Adafruit_NeoPixel *strip, uint32_t color, uint32_t backgroundColor, int index, int numPixels, int pixelSpace);
 
 class NeoElectrons: public Adafruit_NeoPixel{
     private:
@@ -76,23 +76,23 @@ class NeoElectrons: public Adafruit_NeoPixel{
         */
         void setColors(uint32_t electronColor, uint32_t backgroundColor);
         /**
-         * Moves the electron foward once one pixel from the index
-         * Call this function periodically to move the electron foward
+         * Moves the electron forward once one pixel from the index
+         * Call this function periodically to move the electron forward
          * @return The Index of the first electron
         */
-        int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor, int pixelAmount);
+        int moveColorForwardOnce(uint32_t color, uint32_t backgroundColor, int pixelAmount);
         /**
-         * Moves the electron foward once one pixel from the index
-         * Call this function periodically to move the electron foward
+         * Moves the electron forward once one pixel from the index
+         * Call this function periodically to move the electron forward
          * @return The Index of the first electron
         */
-        int moveColorFowardOnce(uint32_t color, uint32_t backgroundColor);
+        int moveColorForwardOnce(uint32_t color, uint32_t backgroundColor);
         /**
-         * Moves the electron foward once one pixel from the index
-         * Call this function periodically to move the electron foward
+         * Moves the electron forward once one pixel from the index
+         * Call this function periodically to move the electron forward
          * @return The Index of the first electron 
         */
-        int moveColorFowardOnce();
+        int moveColorForwardOnce();
 
         /**
          * Gets the index of the electron
@@ -122,7 +122,7 @@ class NeoElectrons: public Adafruit_NeoPixel{
         /**
          * Actually runs the blink command,
          * Will be called by the updateBlink function 
-         * so it is recoomended to use that instead
+         * so it is recommended to use that instead
         */
         void runBlink();
         
@@ -154,7 +154,7 @@ class NeoElectrons: public Adafruit_NeoPixel{
          * Sets the amount of electrons in the strip
          * @param electronAmount: The amount of electrons in the strip
         */
-        void setElectronAmont(int electronAmount) {this->electronAmount = electronAmount;}
+        void setElectronAmount(int electronAmount) {this->electronAmount = electronAmount;}
         
         /**
          * Increases the amount of electrons in the strip by one

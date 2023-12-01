@@ -38,7 +38,7 @@
 #define SMALLPIXELAMOUNT 2 // The number of pixels that are lit up on the small strip (will NOT change on pixel switch)
 
 /*
- * The number of pixels between the two pixels including the pixel that are lit up. Should be devidble by both the outer and inner number of pixels.
+ * The number of pixels between the two pixels including the pixel that are lit up. Should be dividable by both the outer and inner number of pixels.
  * This is because we want the pixels to be evenly spaced out. IF THIS IS NOT TRUE, THE PIXELS WILL NOT BE EVENLY SPACED OUT.
 */
 #define DEFAULTPIXELSPACE -1
@@ -47,14 +47,14 @@
 #define SMALLPIXELSPACE SMALLNUMPIXELS/SMALLPIXELAMOUNT
 
 
-#define BRIGHTNESS 255 // The brightness of the LEDS should be a value from 0 - 255
+#define BRIGHTNESS 0 // The brightness of the LEDS should be a value from 0 - 255 (0 being MAX)
 
 //Electron Colors of the small Strip should be values from (0 - 255):
 #define smallRED 255
 #define smallGREEN 0
 #define smallBLUE 180
 
-//Electron Colors of the inner Stshould be values from (0 - 255):
+//Electron Colors of the inner Should be values from (0 - 255):
 #define innerRED 255
 #define innerGREEN 0
 #define innerBLUE 255
