@@ -22,5 +22,6 @@ class CloudSerialSystem {
     void checkForCommands(String command);
     void checkForCommands() { this->checkForCommands(*this->cloudSerialObject); };
     void print(String message);
+    void debugPrint(String message);
 };
 #endif

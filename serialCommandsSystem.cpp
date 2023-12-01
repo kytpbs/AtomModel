@@ -39,4 +39,9 @@ void CloudSerialSystem::checkForCommands(String command) {
         this->print("Command not found");
     }
 }
+
+void CloudSerialSystem::debugPrint(String message) {
+    this->print("DEBUG - " + message);
+    Serial.println("DEBUG - " + message);
+}
 #endif
