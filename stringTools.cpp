@@ -40,12 +40,7 @@ String joinString(std::vector<String>* argv, String separator) {
     // return String("Not implemented yet!");
     String string = "";
     for (int i = 0; i < argv->size(); i++) {
-        try {
-            string = string + argv->at(i);
-        } catch (std::out_of_range e) {
-            Serial.println("ERROR: Out of range! i: " + String(i) + " Size: " + String(argv->size()));
-            return string;
-        }
+        string = string + argv->at(i);
         if (i != argv->size() - 1) {
             string += separator;
         }
