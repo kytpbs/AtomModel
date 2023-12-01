@@ -106,6 +106,10 @@ void cloudSetup() {
   innerStripColor.getCloudValue().setColorRGB(innerRED, innerGREEN, innerBLUE);
   outerStripColor.getCloudValue().setColorRGB(outerRED, outerGREEN, outerBLUE);
   smallStripColor.getCloudValue().setColorRGB(smallRED, smallGREEN, smallBLUE);
+
+  // setup all CLI commands
+  setupCommands(&cloudCLI);
+
   // Multi-threading setup
   Serial.print("Setup currently running on core: ");
 #ifdef ARDUINO_ARCH_ESP32
@@ -281,7 +285,6 @@ void onCloudSerialChange() { // Will only give the newest message, NICE!
   }
 
   cloudCLI.checkForCommands(tmpSerial);
-  setupCommands(&cloudCLI);
   
   if (cloudSerial.equalsIgnoreCase("switch")) {
     runSwitch();
