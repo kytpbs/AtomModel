@@ -1,4 +1,5 @@
 #include "serialCommandsSystem.h"
+#ifdef SERIALCOMMANDSSYSTEM_H // only include this file if serialCommandsSystem.h is included
 #include <vector>
 
 CloudSerialSystem::CloudSerialSystem(String* cloudSerialObject) {
@@ -38,3 +39,4 @@ void CloudSerialSystem::checkForCommands(String command) {
         this->print("Command not found");
     }
 }
+#endif

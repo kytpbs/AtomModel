@@ -1,4 +1,5 @@
 #include "commands.h"
+#ifdef COMMANDS_H // only include this file if commands.h is included
 
 void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
     cloudSerialSystem->print("pong");
@@ -16,3 +17,4 @@ void setupCommands(CloudSerialSystem* cloudSerialSystem) {
     cloudSerialSystem->addCommand("ping", ping);
     cloudSerialSystem->addCommand("echo", echo);
 }
+#endif

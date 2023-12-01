@@ -1,4 +1,4 @@
-#ifndef STRINGTOOLS_H
+#if !defined(STRINGTOOLS_H) && (defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266)) // STD does not exist on Arduino
 #define STRINGTOOLS_H
 #include <Arduino.h>
 #include <vector>

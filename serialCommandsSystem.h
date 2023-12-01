@@ -3,8 +3,7 @@
  * @brief A library for creating commands for serial communication using ArduinoIoTCloud.
  * uses the "messaging" widget from ArduinoIoTCloud. and the "String" object from Arduino.h.
 */
-
-#ifndef SERIALCOMMANDSSYSTEM_H
+#if !defined(SERIALCOMMANDSSYSTEM_H) && (defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266)) // STD does not exist on Arduino
 #define SERIALCOMMANDSSYSTEM_H
 
 #include <Arduino.h>

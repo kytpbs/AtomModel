@@ -1,5 +1,8 @@
 #include "stringTools.h"
-#include <vector>
+#ifndef STRINGTOOLS_H // STD does not exist on Arduino
+// we don't need to implement this for Arduino, because std is not available on Arduino.
+#else // STD does not exist on Arduino
+
 
 void splitString(String string, std::vector<String>* argv) {
     int spaceIndex = string.indexOf(" ");
@@ -57,3 +60,4 @@ String joinString(std::vector<String>* argv, char separator) {
 String joinString(std::vector<String>* argv) {
     return joinString(argv, " ");
 }
+#endif
