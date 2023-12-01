@@ -19,8 +19,6 @@ NeoElectrons outerStrip (OUTNUMPIXELS, OUTDATA, NEO_GRB + NEO_KHZ800);     // Cr
 NeoElectrons outerStrip2(OUTNUMPIXELS, OUTDATA2, NEO_GRB + NEO_KHZ800);    // Create the second outer strip object
 NeoElectrons outerStrip3(OUTNUMPIXELS, OUTDATA3, NEO_GRB + NEO_KHZ800);    // Create the third outer strip object
 
-unsigned long lastSwitchTime = 0; // The last time the pixels switched
-
 bool builtinLedState = false; // The state of the builtin led
 
 
@@ -128,8 +126,8 @@ void cloudSetup() {
 /* DONE SETUP */
 
 void loop() {
-  if (millis() - lastSwitchTime >= SWITCHTIME * 1000) { // If it has been SWITCHTIME seconds since the last switch
-    runSwitch(); // Run the switch
+  if (stripCommands::shouldSwitch()) { // If it has been SWITCHTIME seconds since the last switch
+    stripCommands::runSwitch(); // Run the switch
   }
 #ifdef ARDUINO_ARCH_ESP8266
   cloudLoop();
@@ -139,57 +137,9 @@ void loop() {
   blinkbuiltinled(); // Blink the builtin led to show that the program is running, but not on an ESP as the pin changes from board to board, might change in the future
 #endif
 
-  moveElectronFoward(); // Move The Electrons Foward
-  updateBlinks(); // Run the updateBlink function for all the strips
+  stripCommands::moveElectronFoward(); // Move The Electrons Foward
+  stripCommands::updateBlinks(); // Run the updateBlink function for all the strips
 }
-
-void runSwitch() {
-  Serial.println("Blinking! as " + String(SWITCHTIME) + " Seconds have passed."); // Print that we are blinking
-  lastSwitchTime = millis(); // Set the last switch time to the current time
-  blinkAll(BLINKAMOUNT); // Blink the pixels
-  switchPixel(); // Switch the pixels
-  return;
-}
-
-/**
- * Moves the red color by one pixel from the back to the front removing the red color from the back
-*/
-void moveElectronFoward() {
-  // Move the electrons foward
-  innerStrip.moveColorFowardOnce();
-  innerStrip2.moveColorFowardOnce();
-  outerStrip.moveColorFowardOnce();
-  outerStrip2.moveColorFowardOnce();
-  outerStrip3.moveColorFowardOnce();
-  smallStrip.moveColorFowardOnce();
-}
-
-void updateBlinks() {
-  innerStrip.updateBlink();
-  innerStrip2.updateBlink();
-  outerStrip.updateBlink();
-  outerStrip2.updateBlink();
-  outerStrip3.updateBlink();
-  smallStrip.updateBlink();
-}
-
-void blinkAll(int times) {
-  innerStrip.startBlink(times);
-  outerStrip.startBlink(times);
-}
-
-void switchPixel() {
-  if (innerStrip.electronAmount <= outerStrip.electronAmount) {
-    innerStrip.increaseElectronAmount();
-    outerStrip.decreaseElectronAmount();
-  }
-  else {
-    innerStrip.decreaseElectronAmount();
-    outerStrip.increaseElectronAmount();
-  }
-}
-
-
 
 /*   CLOUD FUNCTIONS   */
 #if !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ARCH_ESP32)
