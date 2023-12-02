@@ -1,6 +1,5 @@
 #include "serialCommandsSystem.h"
 #ifdef SERIALCOMMANDSSYSTEM_H // only include this file if serialCommandsSystem.h is included
-#include <vector>
 
 CloudSerialSystem::CloudSerialSystem(String* cloudSerialObject) {
     this->cloudSerialObject = cloudSerialObject;
@@ -11,7 +10,7 @@ void CloudSerialSystem::addCommand(String commandName, void (*function)(CloudSer
 }
 
 void CloudSerialSystem::print(String message) {
-    this->cloudSerialObject->operator= (message);
+    this->printBuffer.push(message);
 }
 
 void CloudSerialSystem::checkForCommands(String command) {
@@ -51,5 +50,14 @@ void CloudSerialSystem::setDebug(bool debug) {
 bool CloudSerialSystem::getDebug() {
     return this->debug;
 } 
-#endif
 
+void CloudSerialSystem::handlePrintQueue() {
+    if (this->printBuffer.size() > 0) {
+        String message = this->printBuffer.front();
+        Serial.println("Printing message: \"" + message + "\" to cloudSerial");
+        this->printBuffer.pop();
+        this->cloudSerialObject->operator= (message);
+    }
+}
+
+#endif
