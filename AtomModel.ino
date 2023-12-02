@@ -7,6 +7,7 @@
 #include "serialCommandsSystem.h"
 #include "commands.h"
 CloudSerialSystem cloudCLI(&cloudSerial); // Create the cloud serial system object that will handle the cloud serial commands
+bool connectedToCloud = false;
 #define debugPrint(...) cloudCLI.debugPrint(__VA_ARGS__)
 #define debugPrintln(...) debugPrint(__VA_ARGS__)
 #else
@@ -50,8 +51,19 @@ void setup() {
 #endif
 }
 
-
+/* CLOUD SETUPS */
 #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266) // only include if we are on an ESP
+
+void onCloudSync() {
+  Serial.println("Syncing with cloud Completed!");
+  connectedToCloud = true;
+}
+
+void onCloudDisconnect() {
+  Serial.println("Disconnected from cloud!");
+  connectedToCloud = false;
+}
+
 void cloudSetup() {
   // Defined in thingProperties.h
   initProperties();
@@ -68,6 +80,9 @@ void cloudSetup() {
  */
   setDebugMessageLevel(2);
   ArduinoCloud.printDebugInfo();
+
+  ArduinoCloud.addCallback(ArduinoIoTCloudEvent::SYNC, onCloudSync);
+  ArduinoCloud.addCallback(ArduinoIoTCloudEvent::DISCONNECT, onCloudDisconnect);
 
   // Set the colors of the strips
   innerStripColor.getCloudValue().setColorRGB(innerRED, innerGREEN, innerBLUE);
@@ -123,6 +138,9 @@ void cloudLoop() {
   if (millis() - lastCloudUpdate >= 60000) { // If it has been 60 seconds since the last cloud update
     Serial.println("Updating cloud...");
     ArduinoCloud.update();
+    if (connectedToCloud) { // handle Serial Output
+      cloudCLI.handlePrintQueue();
+    }
     lastCloudUpdate = millis();
   }
 }
@@ -134,6 +152,9 @@ void cloudLoop(void *pvParameters) {
   Serial.println(xPortGetCoreID());
   for (;;) { // infinite loop
     ArduinoCloud.update();
+    if (connectedToCloud) { // handle Serial Output
+      cloudCLI.handlePrintQueue();
+    }
     // The delay function already calls yield() so we don't need to do it ourselves
     delay(1000); // wait a second, so we don't use too much CPU waiting for the cloud to update. *might increase in the future
   }
