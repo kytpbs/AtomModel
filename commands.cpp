@@ -55,6 +55,10 @@ command(reboot) {
     ESP.restart();
 }
 
+command(getIP) {
+    cloudSerialSystem->print(WiFi.localIP().toString());
+}
+
 void setupCommands(CloudSerialSystem* cloudSerialSystem) {
     cloudSerialSystem->addCommand("ping", ping);
     cloudSerialSystem->addCommand("echo", echo);
@@ -62,6 +66,7 @@ void setupCommands(CloudSerialSystem* cloudSerialSystem) {
     cloudSerialSystem->addCommand("blink", blinkStrips);
     cloudSerialSystem->addCommand("debug", setDebugMode);
     cloudSerialSystem->addCommand("reboot", reboot);
+    cloudSerialSystem->addCommand("ip", getIP);
 }
 
 #endif

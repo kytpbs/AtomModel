@@ -4,6 +4,7 @@
 #include "stringTools.h"
 #include "stripCommands.h"
 #include "Constants.h"
+#include "WiFi.h"
 #include <vector>
 
 #define command(name) void name(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv)
@@ -13,6 +14,8 @@ void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 void echo(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
 command(reboot);
+
+command(getIP);
 
 void switchElectronOnStrips(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
