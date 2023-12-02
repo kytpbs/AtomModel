@@ -6,6 +6,8 @@
 #include "Constants.h"
 #include <vector>
 
+#define command(name) void name(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv)
+
 void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
 void echo(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
