@@ -12,6 +12,8 @@ void ping(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
 void echo(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
+command(reboot);
+
 void switchElectronOnStrips(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);
 
 void blinkStrips(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv);

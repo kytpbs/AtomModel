@@ -49,11 +49,17 @@ void setDebugMode(CloudSerialSystem* cloudSerialSystem, std::vector<String>* arg
     cloudSerialSystem->print("Invalid argument! Not changing debug mode. Current debug mode: " + String(cloudSerialSystem->getDebug() ? "true" : "false"));
 }
 
+command(reboot) {
+    cloudSerialSystem->print("Rebooting...");
+    ESP.restart();
+}
+
 void setupCommands(CloudSerialSystem* cloudSerialSystem) {
     cloudSerialSystem->addCommand("ping", ping);
     cloudSerialSystem->addCommand("echo", echo);
     cloudSerialSystem->addCommand("switch", switchElectronOnStrips);
     cloudSerialSystem->addCommand("blink", blinkStrips);
     cloudSerialSystem->addCommand("debug", setDebugMode);
+    cloudSerialSystem->addCommand("reboot", reboot);
 }
 #endif
