@@ -36,12 +36,13 @@ void setDebugMode(CloudSerialSystem* cloudSerialSystem, std::vector<String>* arg
         cloudSerialSystem->print("No arguments provided! Current debug mode: " + String(cloudSerialSystem->getDebug() ? "true" : "false"));
         return;
     }
-    if (argv->at(0) == "true") {
+    String argument = argv->at(0);
+    if (argument == "true" || argument == "on") {
         cloudSerialSystem->setDebug(true);
         cloudSerialSystem->print("Debug mode set to true");
         return;
     }
-    if (argv->at(0) == "false") {
+    if (argument == "false" || argument == "off") {
         cloudSerialSystem->setDebug(false);
         cloudSerialSystem->print("Debug mode set to false");
         return;
@@ -62,4 +63,5 @@ void setupCommands(CloudSerialSystem* cloudSerialSystem) {
     cloudSerialSystem->addCommand("debug", setDebugMode);
     cloudSerialSystem->addCommand("reboot", reboot);
 }
+
 #endif
