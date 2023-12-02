@@ -6,6 +6,8 @@
 #include "thingProperties.h"
 #include "serialCommandsSystem.h"
 #include "commands.h"
+#include "OTA_System.h"
+#include "WiFi.h"
 CloudSerialSystem cloudCLI(&cloudSerial); // Create the cloud serial system object that will handle the cloud serial commands
 bool connectedToCloud = false;
 #define debugPrint(...) cloudCLI.debugPrint(__VA_ARGS__)
@@ -92,12 +94,13 @@ void cloudSetup() {
   // setup all CLI commands
   setupCommands(&cloudCLI);
 
+#ifdef ARDUINO_ARCH_ESP32
   // Multi-threading setup
   Serial.print("Setup currently running on core: ");
-#ifdef ARDUINO_ARCH_ESP32
   Serial.println(xPortGetCoreID());
   delay(500);
-  xTaskCreate(cloudLoop, "CloudLoop", 20000, NULL, 2, NULL);
+  xTaskCreatePinnedToCore(cloudLoop, "CloudLoop", 20000, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(OTALoop, "OTALoop", 20000, NULL, 2, NULL, 0); // OTA loop has a higher priority than the cloud loop, so it will run first
   delay(1000);
 #elif defined(ARDUINO_ARCH_ESP8266)
   delay(500);
@@ -147,6 +150,28 @@ void cloudLoop() {
 #endif
 
 #if defined(ARDUINO_ARCH_ESP32) // only include if we are on an ESP
+void OTASetup() {
+  Serial.println("Setting up OTA...");
+  setupOTA(&cloudCLI);
+  Serial.println("Done setting up OTA!");
+}
+
+void OTALoop(void *pvParameters) {
+  bool firstRun = true;
+  Serial.print("OTA Loop currently running on core: ");
+  Serial.println(xPortGetCoreID());
+  for (;;) { // infinite loop
+    if (firstRun && WiFi.status() == WL_CONNECTED) {
+      firstRun = false;
+      debugPrintln("Connected to WiFi: \"" + WiFi.SSID() + "\"");
+      cloudCLI.print("CURRENT IP: " + WiFi.localIP().toString());
+      Serial.println("CURRENT IP: " + WiFi.localIP().toString());
+      OTASetup();
+    }
+    handleOTA(); // this function already calls delay() so we don't need to do it ourselves
+  }
+}
+
 void cloudLoop(void *pvParameters) {
   Serial.print("Cloud Loop currently running on core: ");
   Serial.println(xPortGetCoreID());
@@ -156,7 +181,7 @@ void cloudLoop(void *pvParameters) {
       cloudCLI.handlePrintQueue();
     }
     // The delay function already calls yield() so we don't need to do it ourselves
-    delay(1000); // wait a second, so we don't use too much CPU waiting for the cloud to update. *might increase in the future
+    delay(500); // wait half a second, so we don't use too much CPU waiting for the cloud to update. *might increase in the future
   }
 }
 #endif
