@@ -1,6 +1,14 @@
 #if !defined(OTA_SYSTEM_H) && (defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266))
 #define OTA_SYSTEM_H
 #include "serialCommandsSystem.h"
+
+#if __has_include("arduino_secrets.h")
+    #include "arduino_secrets.h"
+#else
+    #define USERNAME "admin"
+    #define PASSWORD "admin"
+#endif
+
 #include "arduino_secrets.h"
 #ifdef ARDUINO_ARCH_ESP8266
     #include <ESP8266WebServer.h>
