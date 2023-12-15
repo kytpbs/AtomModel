@@ -14,11 +14,14 @@ void echo(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
 }
 
 void switchElectronOnStrips(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
-    stripCommands::runSwitch();
-    cloudSerialSystem->print("Switching electron on strips");
+    // TODO: Implement this
+    //stripCommands::runSwitch();
+    cloudSerialSystem->print("Not Implemented Yet!");
 }
 
 void blinkStrips(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv) {
+    cloudSerialSystem->print("Not Implemented Yet!");
+    return; // TODO: Implement this
     int blinkAmount = BLINKAMOUNT;
     if (argv->size() > 0) {
         blinkAmount = argv->at(0).toInt();

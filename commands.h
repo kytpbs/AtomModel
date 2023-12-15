@@ -3,9 +3,12 @@
 #define COMMANDS_H
 #include "serialCommandsSystem.h"
 #include "stringTools.h"
-#include "stripCommands.h"
 #include "Constants.h"
+#ifdef ARDUINO_ARCH_ESP32
 #include "WiFi.h"
+#elif defined(ARDUINO_ARCH_ESP8266)
+#include "ESP8266WiFi.h"
+#endif
 #include <vector>
 
 #define command(name) void name(CloudSerialSystem* cloudSerialSystem, std::vector<String>* argv)
