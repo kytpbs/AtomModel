@@ -76,13 +76,15 @@ int NeoElectrons::moveColorForwardOnce(uint32_t color, uint32_t backgroundColor,
     if (isBlinking()) {
         return electronIndex; // If the strip is blinking, don't move the electrons
     }
-
-    if (pixelSpace == DEFAULTPIXELSPACE) {
-        pixelSpace = numPixels() / activePixelAmount;
+    int currentPixelSpace;
+    if (this->pixelSpace == DEFAULTPIXELSPACE) {
+        currentPixelSpace = numPixels() / activePixelAmount;
     }
-
+    else {
+        currentPixelSpace = this->pixelSpace;
+    }
     // Move the electrons forward
-    moveColorForwardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, pixelSpace);
+    moveColorForwardOnceLib(this, color, backgroundColor, electronIndex, activePixelAmount, currentPixelSpace);
     
     // Increase the electron index
     this->electronIndex = (electronIndex + 1) % numPixels();
