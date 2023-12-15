@@ -52,10 +52,6 @@ NeoElectrons::NeoElectrons(uint16_t n, int16_t p, neoPixelType t, int pixelSpace
     this->pixelSpace = pixelSpace;
 }
 
-NeoElectrons::NeoElectrons(uint16_t n, int16_t p, int pixelSpace): Adafruit_NeoPixel(n, p) {
-    this->pixelSpace = pixelSpace;
-}
-
 void NeoElectrons::setup(int brightness) {
     this->begin(); // This initializes the strip
     this->setBrightness(brightness); // Set the brightness of the strip

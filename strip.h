@@ -55,7 +55,6 @@ class NeoElectrons: public Adafruit_NeoPixel{
         NeoElectrons();
         NeoElectrons(uint16_t n, int16_t p, neoPixelType t, int pixelSpace);
         NeoElectrons(uint16_t n, int16_t p, neoPixelType t);
-        NeoElectrons(uint16_t n, int16_t p, int pixelSpace);
         NeoElectrons(uint16_t n, int16_t p);
         void setup();
         void setup(int brightness);
