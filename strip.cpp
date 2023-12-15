@@ -131,7 +131,6 @@ void NeoElectrons::runBlink() {
         }
         else {
             clear();
-            show();
         }
         blinkState = !blinkState;
         show();
