@@ -5,6 +5,12 @@
 #ifndef STRIPS_H
 #define STRIPS_H
 
+/**
+ * Returns the remainder of the division of a by b.
+ * Will always be positive. instead of the default c++ modulo operator, which
+ * can be negative.
+*/
+int moduloEuclidean(int a, int b);
 
 /**
  * Sets the pixel at the given index to the given color

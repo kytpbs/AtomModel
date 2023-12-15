@@ -1,7 +1,16 @@
 #include "strip.h"
 
+int moduloEuclidean(int a, int b) {
+  int m = a % b;
+  if (m < 0) {
+    // m += (b < 0) ? -b : b; // avoid this form: it is UB when b == INT_MIN
+    m = (b < 0) ? m - b : m + b;
+  }
+  return m;
+}
+
 void setPixel(Adafruit_NeoPixel *strip, int index, uint32_t color) {
-    strip->setPixelColor(index % strip->numPixels(), color);
+    strip->setPixelColor(moduloEuclidean(index, strip->numPixels()), color);
 }
 
 void flushColor(Adafruit_NeoPixel *strip, uint32_t color) {
