@@ -1,3 +1,4 @@
+#pragma once
 #if !defined(OTA_SYSTEM_H) && (defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266))
 #define OTA_SYSTEM_H
 #include "serialCommandsSystem.h"

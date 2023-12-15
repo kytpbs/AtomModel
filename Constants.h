@@ -1,4 +1,5 @@
 #define SWITCHTIME 45 // The amount of time to switch the Electrons in seconds.
+#pragma once
 
 #define OUTNUMPIXELS 196 // The number of LEDs in the outer strip
 #define INNUMPIXELS 160 // The number of LEDs in the inner strip

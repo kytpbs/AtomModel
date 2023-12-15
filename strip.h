@@ -1,3 +1,4 @@
+#pragma once
 #include <Adafruit_NeoPixel.h>
 #include "Constants.h"
 

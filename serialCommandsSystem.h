@@ -1,3 +1,4 @@
+#pragma once
 /**
  * @file serialCommandsSystem.h
  * @brief A library for creating commands for serial communication using ArduinoIoTCloud.
